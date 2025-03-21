@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инфологика - Разработка ИИ-ассистентов</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --primary-light: #e0f2fe;
+            --secondary: #06b6d4;
+            --text: #0f172a;
+            --text-light: #64748b;
+            --background: #f8fafc;
+            --card-bg: #ffffff;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 22px;
+            color: var(--primary);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 26px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        nav ul li a:not(.btn)::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:not(.btn):hover {
+            color: var(--primary);
+        }
+
+        nav ul li a:not(.btn):hover::after {
+            width: 100%;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(14, 165, 233, 0.2);
+        }
+
+        .btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(14, 165, 233, 0.25);
+        }
+
+        .hero {
+            padding: 120px 0 60px;
+            background-color: var(--primary-light);
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--text);
+            line-height: 1.2;
+        }
+
+        h1 span {
+            color: var(--primary);
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        section {
+            padding: 60px 0;
+        }
+
+        section h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--text);
+        }
+
+        .problems {
+            background-color: var(--card-bg);
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .problem-card {
+            background-color: var(--background);
+            padding: 25px;
+            border-radius: 4px;
+            transition: transform 0.3s;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .problem-card i {
+            font-size: 1.8rem;
+            color: var(--danger);
+            margin-bottom: 15px;
+        }
+
+        .problem-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .solutions {
+            background-color: var(--primary-light);
+        }
+
+        .solutions-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .solution-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .solution-item i {
+            font-size: 1.2rem;
+            color: var(--success);
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .advantages {
+            background-color: var(--card-bg);
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .advantage-card {
+            text-align: center;
+            padding: 25px;
+            border-radius: 4px;
+            background-color: var(--background);
+            transition: transform 0.3s;
+        }
+
+        .advantage-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .advantage-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .advantage-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .cases {
+            background-color: var(--primary-light);
+        }
+
+        .case-studies {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .case-card {
+            background-color: var(--card-bg);
+            border-radius: 4px;
+            padding: 25px;
+        }
+
+        .case-icon {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .case-icon i {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .case-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            text-align: center;
+            color: var(--text);
+        }
+
+        .case-content p {
+            margin-bottom: 15px;
+        }
+
+        .case-metric {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .testimonial {
+            text-align: center;
+            max-width: 800px;
+            margin: 40px auto 0;
+            padding: 25px;
+            background-color: var(--card-bg);
+            border-radius: 4px;
+        }
+
+        .testimonial p {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .cta {
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .cta h2 {
+            color: white;
+        }
+
+        .cta-text {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 1.2rem;
+        }
+
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 4px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-wide {
+            grid-column: span 2;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            background-color: var(--background);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--secondary);
+        }
+
+        .form-message {
+            display: none;
+            text-align: center;
+            padding: 15px 25px;
+            border-radius: 4px;
+            font-weight: 500;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            min-width: 300px;
+            max-width: 90%;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeInOut 5s ease forwards;
+        }
+
+        .form-message.success {
+            display: block;
+            background-color: white;
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+        
+        .form-message.error {
+            display: block;
+            background-color: white;
+            color: var(--danger);
+            border-left: 4px solid var(--danger);
+        }
+        
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            10% {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+            90% {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+        }
+        
+        .form-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+            animation: fadeIn 0.3s ease forwards;
+        }
+        
+        .form-overlay.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .form-loading {
+            display: none;
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .form-loading.active {
+            display: block;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(14, 165, 233, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 0.8s linear infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .form-control.error {
+            border-color: var(--danger);
+        }
+        
+        .error-text {
+            color: var(--danger);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .error-text.visible {
+            display: block;
+        }
+
+        footer {
+            background-color: var(--text);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a, .footer-links i {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .footer-links i {
+            margin-right: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 4px;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 30px;
+            color: #94a3b8;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text);
+        }
+
+        /* Improved Mobile Responsiveness */
+        @media (max-width: 1200px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            section h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-wide {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            nav {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background-color: var(--card-bg);
+                height: 0;
+                overflow: hidden;
+                transition: height 0.3s;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            nav.active {
+                height: auto;
+            }
+
+            nav ul {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            section h2 {
+                font-size: 1.6rem;
+                margin-bottom: 30px;
+            }
+            
+            section {
+                padding: 40px 0;
+            }
+            
+            .solution-item {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                width: 95%;
+                padding: 0 10px;
+            }
+            
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .hero {
+                padding: 100px 0 40px;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .problem-card,
+            .advantage-card,
+            .case-card {
+                padding: 20px 15px;
+            }
+            
+            .form-container {
+                padding: 20px 15px;
+            }
+        }
+
+        /* Simple animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered animation delays */
+        .delay-1 {
+            transition-delay: 0.1s;
+        }
+        .delay-2 {
+            transition-delay: 0.2s;
+        }
+        .delay-3 {
+            transition-delay: 0.3s;
+        }
+        .delay-4 {
+            transition-delay: 0.4s;
+        }
+        .delay-5 {
+            transition-delay: 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-robot"></i> ИнфоЛогика
+                </a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <nav id="mainNav">
+                    <ul>
+                        <li><a href="#problems">Проблемы бизнеса</a></li>
+                        <li><a href="#solutions">Решения</a></li>
+                        <li><a href="#advantages">Преимущества</a></li>
+                        <li><a href="#cases">Кейсы</a></li>
+                        <li><a href="#contact" class="btn">Оставить заявку</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1>Разработка <span>ИИ-ассистентов</span> для вашего бизнеса</h1>
+                <p class="tagline">Умные ассистенты, которых можно обучить консультировать, обучать, выстраивать дружеское взаимодействие с клиентами, предлагать товары и заключать сделки.</p>
+                <a href="#contact" class="btn">Узнать больше</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="problems" id="problems">
+        <div class="container">
+            <h2 class="fade-in">Боли и проблемы бизнеса без автоматизации</h2>
+            <div class="problems-grid">
+                <div class="problem-card fade-in delay-1">
+                    <i class="fas fa-user-slash"></i>
+                    <h3>Потеря клиентов</h3>
+                    <p>Менеджеры не успевают отвечать на запросы, конкуренты перехватывают лидов.</p>
+                </div>
+                <div class="problem-card fade-in delay-2">
+                    <i class="fas fa-calendar-times"></i>
+                    <h3>Пропущенные заявки</h3>
+                    <p>Клиенты пишут в нерабочее время, а утром уже передумали.</p>
+                </div>
+                <div class="problem-card fade-in delay-3">
+                    <i class="fas fa-hourglass-half"></i>
+                    <h3>Длительный цикл продаж</h3>
+                    <p>Менеджеры тратят время на повторяющиеся вопросы вместо работы с горячими лидами.</p>
+                </div>
+                <div class="problem-card fade-in delay-4">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Ошибки и потери данных</h3>
+                    <p>Информация о клиентах теряется, договорённости не фиксируются, CRM заполняется хаотично.</p>
+                </div>
+                <div class="problem-card fade-in delay-5">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>Высокие затраты на персонал</h3>
+                    <p>Содержание отдела продаж требует значительных вложений, а текучка кадров мешает стабильному росту.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="solutions" id="solutions">
+        <div class="container">
+            <h2 class="fade-in">Решение: цифровые ассистенты, которые консультируют и продают 24/7</h2>
+            <div class="solutions-list">
+                <div class="solution-item fade-in delay-1">
+                    <i class="fas fa-comments"></i>
+                    <div>
+                        <strong>Ведёт диалог с клиентом</strong>, выявляет потребности и предлагает решения.
+                    </div>
+                </div>
+                <div class="solution-item fade-in delay-2">
+                    <i class="fas fa-bolt"></i>
+                    <div>
+                        <strong>Даёт мгновенные ответы</strong> на вопросы по товарам и услугам, используя базу данных заказчика.
+                    </div>
+                </div>
+                <div class="solution-item fade-in delay-3">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <strong>Фиксирует договорённости</strong> и передаёт их в CRM, исключая потери информации.
+                    </div>
+                </div>
+                <div class="solution-item fade-in delay-4">
+                    <i class="fas fa-clock"></i>
+                    <div>
+                        <strong>Работает круглосуточно</strong> без выходных, обрабатывая заявки в Telegram или WhatsApp.
+                    </div>
+                </div>
+                <div class="solution-item fade-in delay-5">
+                    <i class="fas fa-chart-line"></i>
+                    <div>
+                        <strong>Оптимизирует</strong> работу отдела продаж, сокращая нагрузку на менеджеров.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="advantages" id="advantages">
+        <div class="container">
+            <h2 class="fade-in">Почему наши ИИ-ассистенты лучше конкурентов?</h2>
+            <div class="advantages-grid">
+                <div class="advantage-card fade-in delay-1">
+                    <i class="fas fa-plug"></i>
+                    <h3>Простая интеграция</h3>
+                    <p>Запускаем быстро, без сложных технических настроек.</p>
+                </div>
+                <div class="advantage-card fade-in delay-2">
+                    <i class="fas fa-brain"></i>
+                    <h3>Глубокая экспертиза</h3>
+                    <p>Мы не просто кодим, а понимаем бизнес-процессы и знаем, как увеличить продажи.</p>
+                </div>
+                <div class="advantage-card fade-in delay-3">
+                    <i class="fas fa-piggy-bank"></i>
+                    <h3>Экономия на персонале</h3>
+                    <p>Сокращаем затраты на найм менеджеров, но увеличиваем число обработанных заявок.</p>
+                </div>
+                <div class="advantage-card fade-in delay-4">
+                    <i class="fas fa-chart-pie"></i>
+                    <h3>Рост прибыли</h3>
+                    <p>Конверсия в сделки растёт, так как клиенты получают ответы сразу, без ожидания.</p>
+                </div>
+                <div class="advantage-card fade-in delay-5">
+                    <i class="fas fa-sync-alt"></i>
+                    <h3>Полная синхронизация с CRM</h3>
+                    <p>Никаких потерь данных, отчёты и аналитика всегда под рукой.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cases" id="cases">
+        <div class="container">
+            <h2 class="fade-in">Наши успешные кейсы</h2>
+            <div class="case-studies">
+                <div class="case-card fade-in delay-1">
+                    <div class="case-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="case-content">
+                        <h3>Автосалон</h3>
+                        <p>После внедрения чат-бота обработка заявок выросла, а доля пропущенных клиентов снизилась.</p>
+                        <div class="case-metric">
+                            <div class="metric">
+                                <div class="metric-value">+40%</div>
+                                <div class="metric-label">Рост обработки заявок</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">5%</div>
+                                <div class="metric-label">Пропущенных клиентов</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-card fade-in delay-2">
+                    <div class="case-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="case-content">
+                        <h3>Интернет-магазин</h3>
+                        <p>Автоматизация общения позволила сократить нагрузку на менеджеров и увеличить средний чек.</p>
+                        <div class="case-metric">
+                            <div class="metric">
+                                <div class="metric-value">x2</div>
+                                <div class="metric-label">Снижение нагрузки</div>
+                            </div>
+                            <div class="metric">
+                                <div class="metric-value">+18%</div>
+                                <div class="metric-label">Рост среднего чека</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial fade-in delay-3">
+                <p>"Сомневались, но после внедрения бот стал нашим лучшим сотрудником – всегда на связи, всегда вежлив, всегда закрывает сделки!"</p>
+                <div class="testimonial-author">- Директор компании "Альфа-Строй"</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2 class="fade-in">Готовы начать продавать больше?</h2>
+            <p class="cta-text fade-in delay-1">Оставьте заявку сейчас – получите бесплатную консультацию и демонстрацию чат-бота для вашего бизнеса!</p>
+            
+            <div class="form-container fade-in delay-2">
+                <form id="contactForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="name">Ваше имя</label>
+                            <input type="text" id="name" class="form-control" placeholder="Иван Иванов" required>
+                            <div class="error-text" id="nameError">Пожалуйста, укажите ваше имя</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">Компания</label>
+                            <input type="text" id="company" class="form-control" placeholder="ООО «Компания»" required>
+                            <div class="error-text" id="companyError">Пожалуйста, укажите название компании</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Телефон</label>
+                            <input type="tel" id="phone" class="form-control" placeholder="+7 (XXX) XXX-XX-XX" required>
+                            <div class="error-text" id="phoneError">Пожалуйста, укажите корректный номер телефона</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="email@example.com" required>
+                            <div class="error-text" id="emailError">Пожалуйста, укажите корректный email</div>
+                        </div>
+                        <div class="form-group form-wide">
+                            <label for="message">Ваш запрос</label>
+                            <textarea id="message" class="form-control" rows="4" placeholder="Опишите ваши потребности..."></textarea>
+                            <div class="error-text" id="messageError">Пожалуйста, опишите ваш запрос</div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit" id="submitBtn">Оставить заявку</button>
+                    <div id="formLoading" class="form-loading">
+                        <span class="spinner"></span> Отправка заявки...
+                    </div>
+            <div class="copyright">
+                &copy; 2025 ИнфоЛогика. Все права защищены.
+            </div>
+        </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>О нас</h3>
+                    <p>ИнфоЛогика - разработка ИИ-ассистентов, которые помогают бизнесу консультировать, обучать и продавать 24/7 без участия человека.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Услуги</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> ИИ-ассистенты для бизнеса</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Интеграция с CRM</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Автоматизация продаж</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Поддержка клиентов 24/7</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> +7 (XXX) XXX-XX-XX</li>
+                        <li><i class="fas fa-envelope"></i> info@infologika.ru</li>
+                        <li><i class="fab fa-telegram"></i> @infologikabot</li>
+                    </ul>
+                </div>
+            </div>
+        <div id="formOverlay" class="form-overlay"></div>
+        <div id="formMessage" class="form-message"></div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNav = document.getElementById('mainNav');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+        });
+
+        // Scroll Animation
+        const fadeElems = document.querySelectorAll('.fade-in');
+
+        function checkFade() {
+            fadeElems.forEach(elem => {
+                const elemTop = elem.getBoundingClientRect().top;
+                const triggerPoint = window.innerHeight * 0.8;
+                
+                if (elemTop < triggerPoint) {
+                    elem.classList.add('active');
+                }
+            });
+        }
+
+        // Initial check
+        checkFade();
+
+        // Check on scroll
+        window.addEventListener('scroll', checkFade);
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                    }
+                }
+            });
+        });
+
+        // Form validation and submission
+        const contactForm = document.getElementById('contactForm');
+        const formMessage = document.getElementById('formMessage');
+        const formLoading = document.getElementById('formLoading');
+        const formOverlay = document.getElementById('formOverlay');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        // Input elements
+        const nameInput = document.getElementById('name');
+        const companyInput = document.getElementById('company');
+        const phoneInput = document.getElementById('phone');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+        
+        // Error elements
+        const nameError = document.getElementById('nameError');
+        const companyError = document.getElementById('companyError');
+        const phoneError = document.getElementById('phoneError');
+        const emailError = document.getElementById('emailError');
+        const messageError = document.getElementById('messageError');
+        
+        // Validation function
+        function validateForm() {
+            let isValid = true;
+            
+            // Reset errors
+            const errorTexts = document.querySelectorAll('.error-text');
+            errorTexts.forEach(error => error.classList.remove('visible'));
+            
+            const inputs = document.querySelectorAll('.form-control');
+            inputs.forEach(input => input.classList.remove('error'));
+            
+            // Validate name
+            if (nameInput.value.trim() === '') {
+                nameInput.classList.add('error');
+                nameError.classList.add('visible');
+                isValid = false;
+            }
+            
+            // Validate company
+            if (companyInput.value.trim() === '') {
+                companyInput.classList.add('error');
+                companyError.classList.add('visible');
+                isValid = false;
+            }
+            
+            // Validate phone (simple check for now)
+            if (phoneInput.value.trim() === '' || phoneInput.value.length < 10) {
+                phoneInput.classList.add('error');
+                phoneError.classList.add('visible');
+                isValid = false;
+            }
+            
+            // Validate email
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(emailInput.value)) {
+                emailInput.classList.add('error');
+                emailError.classList.add('visible');
+                isValid = false;
+            }
+            
+            // Message is optional but if provided, should not be empty
+            if (messageInput.value.trim() !== '' && messageInput.value.trim().length < 5) {
+                messageInput.classList.add('error');
+                messageError.classList.add('visible');
+                isValid = false;
+            }
+            
+            return isValid;
+        }
+        
+        // Form submission
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!validateForm()) {
+                return;
+            }
+            
+            // Show loading, hide button
+            submitBtn.disabled = true;
+            formLoading.classList.add('active');
+            formMessage.className = 'form-message';
+            
+            // Get form data
+            const formData = {
+                name: nameInput.value.trim(),
+                company: companyInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                email: emailInput.value.trim(),
+                message: messageInput.value.trim()
+            };
+            
+            // Send data to server
+            sendFormData(formData);
+        });
+        
+        // Function to send data to server
+        function sendFormData(formData) {
+            // Replace with your actual API endpoint
+            const apiUrl = 'https://api.infologika.ru/submit-form';
+            
+            // Simulating API request with timeout (replace this with actual fetch in production)
+            setTimeout(() => {
+                // This simulates a successful response
+                handleSuccess(formData);
+                
+                // Uncomment below to test error handling
+                // handleError('Сервер временно недоступен. Пожалуйста, попробуйте позже.');
+            }, 1500);
+            
+            // Real implementation would use fetch like this:
+            /*
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка сервера');
+                }
+                return response.json();
+            })
+            .then(data => {
+                handleSuccess(formData);
+            })
+            .catch(error => {
+                handleError('Произошла ошибка при отправке формы. Пожалуйста, попробуйте позже.');
+                console.error('Error:', error);
+            });
+            */
+        }
+        
+        // Handle successful submission
+        function handleSuccess(formData) {
+            // Hide loading indicator
+            formLoading.classList.remove('active');
+            submitBtn.disabled = false;
+            
+            // Show overlay and success message
+            formOverlay.classList.add('active');
+            formMessage.innerHTML = `
+                <i class="fas fa-check-circle" style="color: var(--success); font-size: 24px; margin-bottom: 10px;"></i><br>
+                Спасибо за заявку, ${formData.name}!<br>Мы свяжемся с вами в ближайшее время.
+            `;
+            formMessage.className = 'form-message success';
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Hide success message and overlay after animation
+            setTimeout(() => {
+                formOverlay.classList.remove('active');
+                formMessage.className = 'form-message';
+            }, 5000);
+        }
+        
+        // Handle error
+        function handleError(errorMsg) {
+            // Hide loading indicator
+            formLoading.classList.remove('active');
+            submitBtn.disabled = false;
+            
+            // Show overlay and error message
+            formOverlay.classList.add('active');
+            formMessage.innerHTML = `
+                <i class="fas fa-exclamation-circle" style="color: var(--danger); font-size: 24px; margin-bottom: 10px;"></i><br>
+                ${errorMsg}
+            `;
+            formMessage.className = 'form-message error';
+            
+            // Hide error message and overlay after animation
+            setTimeout(() => {
+                formOverlay.classList.remove('active');
+                formMessage.className = 'form-message';
+            }, 5000);
+        }
+        
+        // Add input listeners to clear errors on type
+        const allInputs = [nameInput, companyInput, phoneInput, emailInput, messageInput];
+        allInputs.forEach(input => {
+            input.addEventListener('input', function() {
+                this.classList.remove('error');
+                const errorElement = document.getElementById(this.id + 'Error');
+                if (errorElement) {
+                    errorElement.classList.remove('visible');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
