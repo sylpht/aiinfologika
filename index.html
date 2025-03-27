@@ -1,1276 +1,1790 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Инфологика - Разработка ИИ-ассистентов</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #0ea5e9;
-            --primary-light: #e0f2fe;
-            --secondary: #06b6d4;
-            --text: #0f172a;
-            --text-light: #64748b;
-            --background: #f8fafc;
-            --card-bg: #ffffff;
-            --success: #10b981;
-            --danger: #ef4444;
-            --border: #e2e8f0;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        header {
-            background-color: var(--card-bg);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            font-weight: 600;
-            font-size: 22px;
-            color: var(--primary);
-            text-decoration: none;
-            transition: transform 0.3s ease;
-        }
-
-        .logo:hover {
-            transform: scale(1.05);
-        }
-
-        .logo i {
-            margin-right: 10px;
-            font-size: 26px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            align-items: center;
-        }
-
-        nav ul li {
-            margin-left: 30px;
-        }
-
-        nav ul li a {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 500;
-            transition: all 0.3s;
-            position: relative;
-            padding-bottom: 5px;
-        }
-
-        nav ul li a:not(.btn)::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--primary);
-            transition: width 0.3s;
-        }
-
-        nav ul li a:not(.btn):hover {
-            color: var(--primary);
-        }
-
-        nav ul li a:not(.btn):hover::after {
-            width: 100%;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: 500;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(14, 165, 233, 0.2);
-        }
-
-        .btn:hover {
-            background-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(14, 165, 233, 0.25);
-        }
-
-        .hero {
-            padding: 120px 0 60px;
-            background-color: var(--primary-light);
-            text-align: center;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--text);
-            line-height: 1.2;
-        }
-
-        h1 span {
-            color: var(--primary);
-        }
-
-        .tagline {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            margin-bottom: 30px;
-        }
-
-        section {
-            padding: 60px 0;
-        }
-
-        section h2 {
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 40px;
-            color: var(--text);
-        }
-
-        .problems {
-            background-color: var(--card-bg);
-        }
-
-        .problems-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .problem-card {
-            background-color: var(--background);
-            padding: 25px;
-            border-radius: 4px;
-            transition: transform 0.3s;
-        }
-
-        .problem-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .problem-card i {
-            font-size: 1.8rem;
-            color: var(--danger);
-            margin-bottom: 15px;
-        }
-
-        .problem-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 12px;
-            color: var(--text);
-        }
-
-        .solutions {
-            background-color: var(--primary-light);
-        }
-
-        .solutions-list {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .solution-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 4px;
-        }
-
-        .solution-item i {
-            font-size: 1.2rem;
-            color: var(--success);
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
-
-        .advantages {
-            background-color: var(--card-bg);
-        }
-
-        .advantages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .advantage-card {
-            text-align: center;
-            padding: 25px;
-            border-radius: 4px;
-            background-color: var(--background);
-            transition: transform 0.3s;
-        }
-
-        .advantage-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .advantage-card i {
-            font-size: 2rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-
-        .advantage-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 12px;
-            color: var(--text);
-        }
-
-        .cases {
-            background-color: var(--primary-light);
-        }
-
-        .case-studies {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .case-card {
-            background-color: var(--card-bg);
-            border-radius: 4px;
-            padding: 25px;
-        }
-
-        .case-icon {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .case-icon i {
-            font-size: 2.5rem;
-            color: var(--primary);
-        }
-
-        .case-content h3 {
-            font-size: 1.2rem;
-            margin-bottom: 12px;
-            text-align: center;
-            color: var(--text);
-        }
-
-        .case-content p {
-            margin-bottom: 15px;
-        }
-
-        .case-metric {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid var(--border);
-        }
-
-        .metric {
-            text-align: center;
-        }
-
-        .metric-value {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .metric-label {
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-
-        .testimonial {
-            text-align: center;
-            max-width: 800px;
-            margin: 40px auto 0;
-            padding: 25px;
-            background-color: var(--card-bg);
-            border-radius: 4px;
-        }
-
-        .testimonial p {
-            font-style: italic;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-        }
-
-        .testimonial-author {
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .cta {
-            background-color: var(--primary);
-            color: white;
-            text-align: center;
-            padding: 60px 0;
-        }
-
-        .cta h2 {
-            color: white;
-        }
-
-        .cta-text {
-            max-width: 700px;
-            margin: 0 auto 30px;
-            font-size: 1.2rem;
-        }
-
-        .form-container {
-            max-width: 900px;
-            margin: 0 auto;
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 4px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-        }
-
-        .form-wide {
-            grid-column: span 2;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text);
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid var(--border);
-            border-radius: 4px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-            background-color: var(--background);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .btn-submit {
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .btn-submit:hover {
-            background-color: var(--secondary);
-        }
-
-        .form-message {
-            display: none;
-            text-align: center;
-            padding: 15px 25px;
-            border-radius: 4px;
-            font-weight: 500;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            min-width: 300px;
-            max-width: 90%;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-            animation: fadeInOut 5s ease forwards;
-        }
-
-        .form-message.success {
-            display: block;
-            background-color: white;
-            color: var(--success);
-            border-left: 4px solid var(--success);
-        }
-        
-        .form-message.error {
-            display: block;
-            background-color: white;
-            color: var(--danger);
-            border-left: 4px solid var(--danger);
-        }
-        
-        @keyframes fadeInOut {
-            0% {
-                opacity: 0;
-                transform: translate(-50%, -60%);
-            }
-            10% {
-                opacity: 1;
-                transform: translate(-50%, -50%);
-            }
-            90% {
-                opacity: 1;
-                transform: translate(-50%, -50%);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -60%);
-            }
-        }
-        
-        .form-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 9998;
-            animation: fadeIn 0.3s ease forwards;
-        }
-        
-        .form-overlay.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        
-        .form-loading {
-            display: none;
-            text-align: center;
-            margin-top: 15px;
-        }
-        
-        .form-loading.active {
-            display: block;
-        }
-        
-        .spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(14, 165, 233, 0.3);
-            border-radius: 50%;
-            border-top-color: var(--primary);
-            animation: spin 0.8s linear infinite;
-            margin-right: 10px;
-        }
-        
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        
-        .form-control.error {
-            border-color: var(--danger);
-        }
-        
-        .error-text {
-            color: var(--danger);
-            font-size: 0.8rem;
-            margin-top: 5px;
-            display: none;
-        }
-        
-        .error-text.visible {
-            display: block;
-        }
-
-        footer {
-            background-color: var(--text);
-            color: white;
-            padding: 40px 0 20px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .footer-column h3 {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: white;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a, .footer-links i {
-            color: #94a3b8;
-            text-decoration: none;
-            transition: color 0.3s;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .footer-links i {
-            margin-right: 10px;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary);
-        }
-
-        .social-links {
-            display: flex;
-            margin-top: 15px;
-        }
-
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 4px;
-            margin-right: 10px;
-            transition: background-color 0.3s;
-        }
-
-        .social-links a:hover {
-            background-color: var(--primary);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 30px;
-            color: #94a3b8;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--text);
-        }
-
-        /* Improved Mobile Responsiveness */
-        @media (max-width: 1200px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            section h2 {
-                font-size: 1.8rem;
-            }
-        }
-
-        @media (max-width: 992px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .form-wide {
-                grid-column: span 1;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-
-            nav {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background-color: var(--card-bg);
-                height: 0;
-                overflow: hidden;
-                transition: height 0.3s;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-
-            nav.active {
-                height: auto;
-            }
-
-            nav ul {
-                flex-direction: column;
-                padding: 20px;
-            }
-
-            nav ul li {
-                margin: 10px 0;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            section h2 {
-                font-size: 1.6rem;
-                margin-bottom: 30px;
-            }
-            
-            section {
-                padding: 40px 0;
-            }
-            
-            .solution-item {
-                padding: 15px;
-            }
-        }
-
-        @media (max-width: 576px) {
-            .container {
-                width: 95%;
-                padding: 0 10px;
-            }
-            
-            h1 {
-                font-size: 1.6rem;
-            }
-            
-            .hero {
-                padding: 100px 0 40px;
-            }
-            
-            .tagline {
-                font-size: 1rem;
-            }
-            
-            .problem-card,
-            .advantage-card,
-            .case-card {
-                padding: 20px 15px;
-            }
-            
-            .form-container {
-                padding: 20px 15px;
-            }
-        }
-
-        /* Simple animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        .fade-in.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Staggered animation delays */
-        .delay-1 {
-            transition-delay: 0.1s;
-        }
-        .delay-2 {
-            transition-delay: 0.2s;
-        }
-        .delay-3 {
-            transition-delay: 0.3s;
-        }
-        .delay-4 {
-            transition-delay: 0.4s;
-        }
-        .delay-5 {
-            transition-delay: 0.5s;
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GPT Infologika - разработка приложений на базе искусственного интеллекта по фиксированной ставке">
+  <title>GPT Infologika - Услуги искусственного интеллекта</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" href="https://framerusercontent.com/sites/icons/default-favicon-light.v1.png" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="https://framerusercontent.com/sites/icons/default-favicon-dark.v1.png" media="(prefers-color-scheme: dark)">
+  <link rel="apple-touch-icon" href="https://framerusercontent.com/sites/icons/default-touch-icon.v3.png">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* =========== Переменные дизайн-системы =========== */
+    :root {
+      /* Типографика */
+      --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-weight-regular: 400;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 600;
+      --font-weight-bold: 700;
+      --line-height-tight: 1.1;
+      --line-height-normal: 1.3;
+      --line-height-relaxed: 1.5;
+      --letter-spacing-tight: -0.02em;
+      --letter-spacing-normal: 0;
+      
+      /* Размеры текста */
+      --text-xs: 14px;
+      --text-sm: 16px;
+      --text-base: 18px;
+      --text-lg: 20px;
+      --text-xl: 24px;
+      --text-2xl: 32px;
+      --text-3xl: 40px;
+      --text-4xl: 48px;
+      --text-5xl: 56px;
+      --text-6xl: 72px;
+      
+      /* Цвета */
+      --color-white: #ffffff;
+      --color-black: #000000;
+      --color-gray-50: #f8f9fa;
+      --color-gray-100: #f1f3f5;
+      --color-gray-200: #e9ecef;
+      --color-gray-300: #dee2e6;
+      --color-gray-400: #ced4da;
+      --color-gray-500: #adb5bd;
+      --color-gray-600: #6c757d;
+      --color-gray-700: #495057;
+      --color-gray-800: #343a40;
+      --color-gray-900: #212529;
+      
+      /* Цветовая палитра */
+      --color-primary: #000000;
+      --color-primary-light: #2c2c2c;
+      --color-secondary: #737373;
+      --color-accent: #3855b3;
+      
+      /* Фоновые цвета */
+      --color-bg-light: var(--color-white);
+      --color-bg-dark: var(--color-black);
+      --color-bg-muted: var(--color-gray-100);
+      --color-bg-accent: var(--color-accent);
+      
+      /* Цвета текста */
+      --color-text-primary: var(--color-black);
+      --color-text-secondary: var(--color-gray-700);
+      --color-text-light: var(--color-white);
+      --color-text-light-muted: rgba(255, 255, 255, 0.8);
+      --color-text-muted: var(--color-gray-600);
+      
+      /* Отступы */
+      --spacing-0: 0;
+      --spacing-1: 4px;
+      --spacing-2: 8px;
+      --spacing-3: 12px;
+      --spacing-4: 16px;
+      --spacing-5: 20px;
+      --spacing-6: 24px;
+      --spacing-8: 32px;
+      --spacing-10: 40px;
+      --spacing-12: 48px;
+      --spacing-16: 64px;
+      --spacing-20: 80px;
+      --spacing-24: 96px;
+      --spacing-32: 128px;
+      
+      /* Размеры контейнера */
+      --container-sm: 640px;
+      --container-md: 768px;
+      --container-lg: 1024px;
+      --container-xl: 1200px;
+      
+      /* Радиусы скругления */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --radius-full: 9999px;
+      
+      /* Тени */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.05), 0 10px 10px rgba(0, 0, 0, 0.02);
+      
+      /* Переходы */
+      --transition-fast: 150ms ease;
+      --transition-normal: 300ms ease;
+      --transition-slow: 500ms ease;
+    }
+    
+    /* =========== Нормализация и базовые стили =========== */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+      height: 100%;
+    }
+    
+    body {
+      font-family: var(--font-primary);
+      font-size: var(--text-base);
+      line-height: var(--line-height-relaxed);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-primary);
+      background-color: var(--color-bg-light);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      height: 100%;
+    }
+    
+    img, video, svg {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+    
+    a:hover {
+      color: var(--color-accent);
+    }
+    
+    button, input, optgroup, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      line-height: inherit;
+      color: inherit;
+    }
+    
+    button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 0;
+      margin-bottom: 0;
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--line-height-tight);
+      letter-spacing: var(--letter-spacing-tight);
+    }
+    
+    p {
+      margin-top: 0;
+      margin-bottom: var(--spacing-4);
+    }
+    
+    p:last-child {
+      margin-bottom: 0;
+    }
+    
+    /* =========== Утилиты =========== */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+    
+    .text-center {
+      text-align: center;
+    }
+    
+    .mx-auto {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .animate-hover {
+      transition: transform var(--transition-normal), 
+                  box-shadow var(--transition-normal);
+    }
+    
+    .animate-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    /* =========== Контейнеры и сетка =========== */
+    .container {
+      width: 100%;
+      max-width: var(--container-xl);
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: var(--spacing-6);
+      padding-right: var(--spacing-6);
+    }
+    
+    .grid {
+      display: grid;
+      gap: var(--spacing-6);
+    }
+    
+    .grid-cols-1 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    
+    .grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    
+    .grid-cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    
+    .flex {
+      display: flex;
+    }
+    
+    .flex-col {
+      flex-direction: column;
+    }
+    
+    .items-center {
+      align-items: center;
+    }
+    
+    .justify-between {
+      justify-content: space-between;
+    }
+    
+    .gap-4 {
+      gap: var(--spacing-4);
+    }
+    
+    .gap-6 {
+      gap: var(--spacing-6);
+    }
+    
+    .gap-8 {
+      gap: var(--spacing-8);
+    }
+    
+    .gap-16 {
+      gap: var(--spacing-16);
+    }
+    
+    /* =========== Компоненты =========== */
+    .section {
+      padding-top: var(--spacing-16);
+      padding-bottom: var(--spacing-16);
+      position: relative;
+    }
+    
+    @media (min-width: 768px) {
+      .section {
+        padding-top: var(--spacing-24);
+        padding-bottom: var(--spacing-24);
+      }
+    }
+    
+    .section--dark {
+      background-color: var(--color-bg-dark);
+      color: var(--color-text-light);
+    }
+    
+    /* =========== Секции =========== */
+    .section-eyebrow {
+      font-size: var(--text-xl);
+      color: var(--color-text-muted);
+      font-weight: var(--font-weight-medium);
+      margin-bottom: var(--spacing-3);
+      display: block;
+    }
+    
+    .section--dark .section-eyebrow {
+      color: var(--color-text-light-muted);
+    }
+    
+    .section h2 {
+      max-width: 800px;
+    }
+    
+    .about-content {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .about-content p {
+      margin-top: var(--spacing-6);
+    }
+    
+    /* --- Кнопки --- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing-4) var(--spacing-8);
+      border-radius: var(--radius-md);
+      font-weight: var(--font-weight-medium);
+      font-size: var(--text-base);
+      line-height: 1;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+      text-align: center;
+    }
+    
+    .btn-lg {
+      padding: var(--spacing-5) var(--spacing-10);
+      font-size: var(--text-lg);
+      border-radius: var(--radius-lg);
+    }
+    
+    .btn-primary {
+      background-color: var(--color-primary);
+      color: var(--color-white);
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--color-primary-light);
+      color: var(--color-white);
+    }
+    
+    .btn-light {
+      background-color: var(--color-white);
+      color: var(--color-primary);
+    }
+    
+    .btn-light:hover {
+      background-color: var(--color-gray-100);
+    }
+    
+    .btn-outline {
+      background-color: transparent;
+      border: 2px solid currentColor;
+    }
+    
+    .btn-outline:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .btn-block {
+      display: block;
+      width: 100%;
+    }
+    
+    /* =========== Шапка сайта =========== */
+    .header {
+      position: sticky;
+      top: 0;
+      background-color: var(--color-bg-light);
+      box-shadow: var(--shadow-sm);
+      z-index: 1000;
+      padding: var(--spacing-4) 0;
+      transition: background-color var(--transition-normal);
+    }
+    
+    .header.scrolled {
+      background-color: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+    }
+    
+    .header__container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-3);
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-bold);
+    }
+    
+    .logo__image {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-full);
+      object-fit: cover;
+      box-shadow: var(--shadow-md);
+      border: 2px solid var(--color-gray-100);
+    }
+    
+    .nav {
+      display: none;
+    }
+    
+    @media (min-width: 1024px) {
+      .nav {
+        display: flex;
+        gap: var(--spacing-8);
+      }
+    }
+    
+    .nav__item {
+      position: relative;
+      font-weight: var(--font-weight-medium);
+      transition: color var(--transition-fast);
+    }
+    
+    .nav__item::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: currentColor;
+      transition: width var(--transition-normal);
+    }
+    
+    .nav__item:hover::after,
+    .nav__item.active::after {
+      width: 100%;
+    }
+    
+    .menu-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+    }
+    
+    @media (min-width: 1024px) {
+      .menu-toggle {
+        display: none;
+      }
+    }
+    
+    .menu-toggle__icon {
+      position: relative;
+      width: 24px;
+      height: 2px;
+      background-color: var(--color-primary);
+      transition: transform var(--transition-fast);
+    }
+    
+    .menu-toggle__icon::before,
+    .menu-toggle__icon::after {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 2px;
+      background-color: var(--color-primary);
+      transition: transform var(--transition-fast), opacity var(--transition-fast);
+    }
+    
+    .menu-toggle__icon::before {
+      top: -8px;
+    }
+    
+    .menu-toggle__icon::after {
+      bottom: -8px;
+    }
+    
+    .menu-toggle.active .menu-toggle__icon {
+      transform: rotate(45deg);
+    }
+    
+    .menu-toggle.active .menu-toggle__icon::before {
+      transform: translateY(8px) rotate(90deg);
+    }
+    
+    .menu-toggle.active .menu-toggle__icon::after {
+      transform: translateY(-8px) rotate(90deg);
+      opacity: 0;
+    }
+    
+    /* =========== Мобильное меню =========== */
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-bg-light);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transform: translateY(-100%);
+      transition: transform var(--transition-normal);
+    }
+    
+    .mobile-menu.active {
+      transform: translateY(0);
+    }
+    
+    .mobile-menu__nav {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-6);
+      text-align: center;
+    }
+    
+    .mobile-menu__item {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-medium);
+    }
+    
+    .mobile-menu__button {
+      margin-top: var(--spacing-10);
+    }
+    
+    /* =========== Главный баннер =========== */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding-top: var(--spacing-16);
+      padding-bottom: var(--spacing-16);
+    }
+    
+    .hero__container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-8);
+      position: relative;
+      align-items: center;
+    }
+    
+    @media (min-width: 1024px) {
+      .hero__container {
+        grid-template-columns: 7fr 3fr;
+      }
+    }
+    
+    .hero__content {
+      padding-right: 0;
+    }
+    
+    .hero__title {
+      font-size: var(--text-3xl);
+      font-weight: var(--font-weight-bold);
+      line-height: 1.2;
+      margin-bottom: var(--spacing-6);
+      max-width: 100%;
+    }
+    
+    @media (min-width: 768px) {
+      .hero__title {
+        font-size: var(--text-4xl);
+      }
+    }
+    
+    .hero__text {
+      font-size: var(--text-base);
+      margin-bottom: var(--spacing-8);
+      opacity: 0.9;
+      max-width: 85%;
+      line-height: 1.6;
+    }
+    
+    .hero__image {
+      position: relative;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    
+    /* AI Graphic Animation */
+    .ai-graphic {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin-right: var(--spacing-6);
+    }
+    
+    .ai-graphic__circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.6;
+      background: linear-gradient(135deg, rgba(56, 85, 179, 0.8), rgba(106, 139, 255, 0.4));
+      animation: pulse 3s infinite alternate;
+    }
+    
+    .ai-graphic__circle--1 {
+      width: 100px;
+      height: 100px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      animation-delay: 0s;
+      background: linear-gradient(135deg, rgba(56, 85, 179, 0.9), rgba(106, 139, 255, 0.7));
+    }
+    
+    .ai-graphic__circle--2 {
+      width: 140px;
+      height: 140px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      animation-delay: 0.5s;
+    }
+    
+    .ai-graphic__circle--3 {
+      width: 180px;
+      height: 180px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      animation-delay: 1s;
+      opacity: 0.3;
+    }
+    
+    .ai-graphic__lines {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 30px rgba(56, 85, 179, 0.3);
+      animation: rotate 20s linear infinite;
+    }
+    
+    .ai-graphic__lines::before,
+    .ai-graphic__lines::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+    }
+    
+    .ai-graphic__lines::before {
+      width: 80%;
+      height: 80%;
+      animation: rotate 15s linear infinite reverse;
+    }
+    
+    .ai-graphic__lines::after {
+      width: 60%;
+      height: 60%;
+      animation: rotate 10s linear infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0.3;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+      }
+    }
+    
+    @keyframes rotate {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+    
+    /* =========== Сервисы =========== */
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: var(--spacing-6);
+    }
+    
+    @media (min-width: 640px) {
+      .services__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .services__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    .service-card {
+      padding: var(--spacing-6);
+      border-radius: var(--radius-lg);
+      height: 100%;
+      background-color: var(--color-white);
+      border: 1px solid var(--color-gray-200);
+      transition: transform var(--transition-normal), 
+                  box-shadow var(--transition-normal);
+    }
+    
+    .service-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .service-icon {
+      width: 64px;
+      height: 64px;
+      margin-bottom: var(--spacing-5);
+      color: var(--color-accent);
+      background-color: rgba(56, 85, 179, 0.1);
+      padding: var(--spacing-3);
+      border-radius: var(--radius-md);
+    }
+    
+    .service-title {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-3);
+    }
+    
+    .service-description {
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-relaxed);
+    }
+    
+    .service-center {
+      text-align: center;
+      max-width: 600px;
+      margin: var(--spacing-16) auto 0;
+      padding: var(--spacing-8);
+      background-color: var(--color-gray-100);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+    
+    /* =========== О нас =========== */
+    .about-content {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    /* =========== Процесс =========== */
+    .process-step {
+      display: flex;
+      flex-direction: column;
+      padding: var(--spacing-8) 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    @media (min-width: 768px) {
+      .process-step {
+        flex-direction: row;
+      }
+    }
+    
+    .step-number {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-accent);
+      margin-right: var(--spacing-8);
+      margin-bottom: var(--spacing-4);
+      flex-shrink: 0;
+      width: 60px;
+    }
+    
+    @media (min-width: 768px) {
+      .step-number {
+        margin-bottom: 0;
+      }
+    }
+    
+    .step-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-6);
+      width: 100%;
+    }
+    
+    @media (min-width: 1024px) {
+      .step-content {
+        flex-direction: row;
+      }
+    }
+    
+    .step-title {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-semibold);
+      flex: 1;
+    }
+    
+    .step-description {
+      flex: 1;
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-relaxed);
+    }
+    
+    /* =========== Контакты =========== */
+    .contact {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-16);
+    }
+    
+    @media (min-width: 1024px) {
+      .contact {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+    
+    .contact__image {
+      flex: 1;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      position: relative;
+    }
+    
+    .contact__image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      aspect-ratio: 4/3;
+      transition: transform var(--transition-normal);
+    }
+    
+    .contact__image:hover img {
+      transform: scale(1.03);
+    }
+    
+    .contact__content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: var(--spacing-8);
+      background-color: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+    }
+    
+    .contact__title {
+      margin-bottom: var(--spacing-8);
+      font-size: var(--text-3xl);
+      letter-spacing: var(--letter-spacing-tight);
+    }
+    
+    /* =========== Форма обратной связи =========== */
+    .section--alt {
+      background-color: var(--color-gray-50);
+    }
+    
+    .contact-form-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .contact-form {
+      padding: var(--spacing-8);
+      background-color: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--color-gray-200);
+    }
+    
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-6);
+      margin-bottom: var(--spacing-6);
+    }
+    
+    @media (min-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    .form-group {
+      margin-bottom: var(--spacing-6);
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: var(--spacing-2);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-700);
+    }
+    
+    .input-with-icon {
+      position: relative;
+    }
+    
+    .form-icon {
+      position: absolute;
+      left: var(--spacing-4);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 20px;
+      color: var(--color-gray-500);
+    }
+    
+    .message-container .form-icon {
+      top: var(--spacing-4);
+      transform: none;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: var(--spacing-4) var(--spacing-4) var(--spacing-4) var(--spacing-10);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-md);
+      background-color: var(--color-white);
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+      font-size: var(--text-base);
+    }
+    
+    .form-control:focus {
+      border-color: var(--color-accent);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(56, 85, 179, 0.2);
+    }
+    
+    textarea.form-control {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .form-submit {
+      text-align: center;
+      margin-top: var(--spacing-8);
+    }
+    
+    .form-submit .btn {
+      min-width: 200px;
+    }
+    
+    /* =========== Тарифы =========== */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: var(--spacing-6);
+      margin: var(--spacing-12) auto 0;
+      max-width: 1200px;
+    }
+    
+    @media (min-width: 768px) {
+      .pricing-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    .pricing-card {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-6);
+      transition: transform var(--transition-normal);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+    
+    .pricing-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .pricing-name {
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--spacing-3);
+      color: white;
+      padding-bottom: var(--spacing-3);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .pricing-description {
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: var(--spacing-4);
+      font-size: var(--text-sm);
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .pricing-price {
+      font-size: var(--text-3xl);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--spacing-4);
+      color: white;
+      display: block;
+      text-align: center;
+    }
+    
+    .pricing-price-period {
+      font-size: var(--text-xs);
+      opacity: 0.7;
+      display: block;
+      margin-top: var(--spacing-1);
+      text-align: center;
+    }
+    
+    .pricing-features {
+      flex: 1;
+      margin-bottom: var(--spacing-4);
+      padding-top: var(--spacing-4);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+    }
+    
+    .pricing-feature {
+      padding: var(--spacing-2) 0;
+      position: relative;
+      padding-left: var(--spacing-6);
+      color: white;
+      font-size: var(--text-sm);
+      margin-bottom: var(--spacing-2);
+      display: block;
+      line-height: 1.4;
+    }
+    
+    .pricing-feature::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: #4caf50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-weight-bold);
+      font-size: var(--text-xs);
+    }
+    
+    .btn-pricing {
+      background: linear-gradient(to right, var(--color-accent), #6a8bff);
+      border: none;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    
+    .btn-pricing:hover {
+      background: linear-gradient(to right, #2a46a8, #5b7bf0);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(56, 85, 179, 0.4);
+    }
+    
+    /* =========== Проекты =========== */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: var(--spacing-8);
+    }
+    
+    @media (min-width: 768px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    .project-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      height: 360px;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, 
+                  rgba(0, 0, 0, 0.8), 
+                  rgba(0, 0, 0, 0.4) 30%, 
+                  transparent 60%);
+      z-index: 1;
+    }
+    
+    .project-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-normal);
+    }
+    
+    .project-card:hover img {
+      transform: scale(1.05);
+    }
+    
+    .project-title {
+      position: absolute;
+      bottom: var(--spacing-6);
+      left: var(--spacing-6);
+      right: var(--spacing-6);
+      color: var(--color-white);
+      font-size: var(--text-2xl);
+      font-weight: var(--font-weight-semibold);
+      z-index: 2;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* =========== Подвал =========== */
+    .footer {
+      background-color: var(--color-black);
+      color: var(--color-white);
+    }
+    
+    .footer__container {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-10);
+      padding: var(--spacing-16) 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    @media (min-width: 1024px) {
+      .footer__container {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+    
+    .footer__info {
+      max-width: 400px;
+    }
+    
+    .footer__logo {
+      font-family: var(--font-heading);
+      font-size: var(--text-3xl);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--spacing-4);
+    }
+    
+    .footer__description {
+      opacity: 0.8;
+      margin-bottom: var(--spacing-6);
+    }
+    
+    .footer__nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-8);
+    }
+    
+    .footer__nav-item {
+      font-size: var(--text-lg);
+      color: var(--color-gray-400);
+      transition: color var(--transition-fast);
+    }
+    
+    .footer__nav-item:hover {
+      color: var(--color-white);
+    }
+    
+    .footer__bottom {
+      padding: var(--spacing-10) 0;
+      opacity: 0.7;
+    }
+    
+    .footer__contact {
+      font-size: var(--text-base);
+      line-height: 1.6;
+    }
+    
+    .footer__address {
+      margin-top: var(--spacing-4);
+    }
+    
+    /* =========== Адаптивные стили =========== */
+    @media (max-width: 1023px) {
+      .h1 {
+        font-size: var(--text-4xl);
+      }
+      
+      .h2 {
+        font-size: var(--text-3xl);
+      }
+      
+      .h3 {
+        font-size: var(--text-2xl);
+      }
+      
+      .h4 {
+        font-size: var(--text-xl);
+      }
+    }
+    
+    @media (max-width: 767px) {
+      :root {
+        --spacing-16: 48px;
+        --spacing-20: 64px;
+        --spacing-24: 80px;
+      }
+      
+      .h1 {
+        font-size: var(--text-3xl);
+      }
+      
+      .h2 {
+        font-size: var(--text-2xl);
+      }
+      
+      .hero__title {
+        font-size: var(--text-3xl);
+      }
+      
+      .service-card {
+        padding: var(--spacing-4);
+      }
+      
+      .pricing-grid {
+        gap: var(--spacing-6);
+      }
+    }
+    
+    /* Анимации */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .animate-fade-in {
+      animation: fadeIn 0.8s ease forwards;
+    }
+    
+    .delay-100 {
+      animation-delay: 100ms;
+    }
+    
+    .delay-200 {
+      animation-delay: 200ms;
+    }
+    
+    .delay-300 {
+      animation-delay: 300ms;
+    }
+  </style>
 </head>
+
 <body>
-    <header>
-        <div class="container">
-            <div class="navbar">
-                <a href="#" class="logo">
-                    <i class="fas fa-robot"></i> ИнфоЛогика
-                </a>
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <nav id="mainNav">
-                    <ul>
-                        <li><a href="#problems">Проблемы бизнеса</a></li>
-                        <li><a href="#solutions">Решения</a></li>
-                        <li><a href="#advantages">Преимущества</a></li>
-                        <li><a href="#cases">Кейсы</a></li>
-                        <li><a href="#contact" class="btn">Оставить заявку</a></li>
-                    </ul>
-                </nav>
-            </div>
+  <!-- Шапка сайта -->
+  <header class="header" id="header">
+    <div class="container header__container">
+      <a href="#" class="logo">
+        <img class="logo__image" src="https://framerusercontent.com/images/woWZ3R2Shy2w76TJ2jtGxpGKZA.png" alt="GPT Infologika Logo">
+        <span class="visually-hidden">GPT Infologika</span>
+      </a>
+      
+      <nav class="nav">
+        <a href="#services" class="nav__item">Сервисы</a>
+        <a href="#process" class="nav__item">Процессы</a>
+        <a href="#pricing" class="nav__item">Цены</a>
+        <a href="#contact" class="nav__item">Контакты</a>
+        <a href="#support" class="nav__item">Служба поддержки</a>
+      </nav>
+      
+      <button class="btn btn-primary">Закажите сейчас!</button>
+      
+      <div class="menu-toggle">
+        <span class="menu-toggle__icon"></span>
+      </div>
+    </div>
+  </header>
+  
+  <!-- Мобильное меню -->
+  <div class="mobile-menu">
+    <nav class="mobile-menu__nav">
+      <a href="#services" class="mobile-menu__item">Сервисы</a>
+      <a href="#process" class="mobile-menu__item">Процессы</a>
+      <a href="#pricing" class="mobile-menu__item">Цены</a>
+      <a href="#contact" class="mobile-menu__item">Контакты</a>
+      <a href="#support" class="mobile-menu__item">Служба поддержки</a>
+    </nav>
+    
+    <div class="mobile-menu__button">
+      <button class="btn btn-primary btn-lg">Закажите сейчас!</button>
+    </div>
+  </div>
+
+  <!-- Главный баннер -->
+  <section id="hero" class="section section--dark hero">
+    <div class="container hero__container">
+      <div class="hero__content animate-fade-in">
+        <span class="section-eyebrow">The GPT Infologika</span>
+        <h1 class="hero__title">Превратите свои идеи ИИ в продукты, приносящие доход</h1>
+        <p class="hero__text">Мы помогаем инноваторам и предпринимателям создавать передовые решения на базе искусственного интеллекта. От концепции до готового продукта — с нами это проще, чем вы думаете.</p>
+        <button class="btn btn-light btn-lg">Начать действовать</button>
+      </div>
+      
+      <div class="hero__image animate-fade-in delay-200">
+        <div class="ai-graphic">
+          <div class="ai-graphic__circle ai-graphic__circle--1"></div>
+          <div class="ai-graphic__circle ai-graphic__circle--2"></div>
+          <div class="ai-graphic__circle ai-graphic__circle--3"></div>
+          <div class="ai-graphic__lines"></div>
         </div>
-    </header>
+      </div>
+    </div>
+  </section>
 
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content fade-in">
-                <h1>Разработка <span>ИИ-ассистентов</span> для вашего бизнеса</h1>
-                <p class="tagline">Умные ассистенты, которых можно обучить консультировать, обучать, выстраивать дружеское взаимодействие с клиентами, предлагать товары и заключать сделки.</p>
-                <a href="#contact" class="btn">Узнать больше</a>
-            </div>
+  <!-- Секция услуг -->
+  <section id="services" class="section">
+    <div class="container">
+      <span class="section-eyebrow">Сервисы</span>
+      <h2 class="h2">Что мы создаем</h2>
+      
+      <div class="services__grid">
+        <div class="service-card animate-hover">
+          <svg class="service-icon" viewBox="0 0 32 32">
+            <path d="M26 2H6C3.8 2 2 3.8 2 6v20c0 2.2 1.8 4 4 4h20c2.2 0 4-1.8 4-4V6c0-2.2-1.8-4-4-4zm2 24c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h20c1.1 0 2 .9 2 2v20z" fill="currentColor"/>
+            <path d="M16 10c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 10c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zM26 8c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z" fill="currentColor"/>
+          </svg>
+          <h3 class="service-title">Приложения ChatGPT</h3>
+          <p class="service-description">У вас есть идея для реализации с помощью ChatGPT? Разработайте ее здесь!</p>
         </div>
-    </section>
-
-    <section class="problems" id="problems">
-        <div class="container">
-            <h2 class="fade-in">Боли и проблемы бизнеса без автоматизации</h2>
-            <div class="problems-grid">
-                <div class="problem-card fade-in delay-1">
-                    <i class="fas fa-user-slash"></i>
-                    <h3>Потеря клиентов</h3>
-                    <p>Менеджеры не успевают отвечать на запросы, конкуренты перехватывают лидов.</p>
-                </div>
-                <div class="problem-card fade-in delay-2">
-                    <i class="fas fa-calendar-times"></i>
-                    <h3>Пропущенные заявки</h3>
-                    <p>Клиенты пишут в нерабочее время, а утром уже передумали.</p>
-                </div>
-                <div class="problem-card fade-in delay-3">
-                    <i class="fas fa-hourglass-half"></i>
-                    <h3>Длительный цикл продаж</h3>
-                    <p>Менеджеры тратят время на повторяющиеся вопросы вместо работы с горячими лидами.</p>
-                </div>
-                <div class="problem-card fade-in delay-4">
-                    <i class="fas fa-exclamation-triangle"></i>
-                    <h3>Ошибки и потери данных</h3>
-                    <p>Информация о клиентах теряется, договорённости не фиксируются, CRM заполняется хаотично.</p>
-                </div>
-                <div class="problem-card fade-in delay-5">
-                    <i class="fas fa-money-bill-wave"></i>
-                    <h3>Высокие затраты на персонал</h3>
-                    <p>Содержание отдела продаж требует значительных вложений, а текучка кадров мешает стабильному росту.</p>
-                </div>
-            </div>
+        
+        <div class="service-card animate-hover">
+          <svg class="service-icon" viewBox="0 0 32 32">
+            <path d="M28 6h-6v2h6v16H4V8h6V6H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h24c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z" fill="currentColor"/>
+            <path d="M16 4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2s2-.9 2-2V6c0-1.1-.9-2-2-2z" fill="currentColor"/>
+            <path d="M21.4 9.4L16 14.8l-5.4-5.4-1.4 1.4L16 17.6l6.8-6.8z" fill="currentColor"/>
+          </svg>
+          <h3 class="service-title">ИИ Чат-боты</h3>
+          <p class="service-description">Получите чат-бота на базе ИИ для использования или продажи другим</p>
         </div>
-    </section>
-
-    <section class="solutions" id="solutions">
-        <div class="container">
-            <h2 class="fade-in">Решение: цифровые ассистенты, которые консультируют и продают 24/7</h2>
-            <div class="solutions-list">
-                <div class="solution-item fade-in delay-1">
-                    <i class="fas fa-comments"></i>
-                    <div>
-                        <strong>Ведёт диалог с клиентом</strong>, выявляет потребности и предлагает решения.
-                    </div>
-                </div>
-                <div class="solution-item fade-in delay-2">
-                    <i class="fas fa-bolt"></i>
-                    <div>
-                        <strong>Даёт мгновенные ответы</strong> на вопросы по товарам и услугам, используя базу данных заказчика.
-                    </div>
-                </div>
-                <div class="solution-item fade-in delay-3">
-                    <i class="fas fa-check-circle"></i>
-                    <div>
-                        <strong>Фиксирует договорённости</strong> и передаёт их в CRM, исключая потери информации.
-                    </div>
-                </div>
-                <div class="solution-item fade-in delay-4">
-                    <i class="fas fa-clock"></i>
-                    <div>
-                        <strong>Работает круглосуточно</strong> без выходных, обрабатывая заявки в Telegram или WhatsApp.
-                    </div>
-                </div>
-                <div class="solution-item fade-in delay-5">
-                    <i class="fas fa-chart-line"></i>
-                    <div>
-                        <strong>Оптимизирует</strong> работу отдела продаж, сокращая нагрузку на менеджеров.
-                    </div>
-                </div>
-            </div>
+        
+        <div class="service-card animate-hover">
+          <svg class="service-icon" viewBox="0 0 32 32">
+            <path d="M29 10h-8V6c0-1.1-.9-2-2-2H13c-1.1 0-2 .9-2 2v4H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h26c1.1 0 2-.9 2-2V12c0-1.1-.9-2-2-2zM13 6h6v4h-6V6zm16 18H3V12h26v12z" fill="currentColor"/>
+            <path d="M9 16c0 .6.4 1 1 1h12c.6 0 1-.4 1-1s-.4-1-1-1H10c-.6 0-1 .4-1 1z" fill="currentColor"/>
+            <path d="M9 20c0 .6.4 1 1 1h12c.6 0 1-.4 1-1s-.4-1-1-1H10c-.6 0-1 .4-1 1z" fill="currentColor"/>
+          </svg>
+          <h3 class="service-title">Веб-приложения на основе ИИ</h3>
+          <p class="service-description">Получите веб-приложения на базе ИИ, созданные для вас или для продажи</p>
         </div>
-    </section>
-
-    <section class="advantages" id="advantages">
-        <div class="container">
-            <h2 class="fade-in">Почему наши ИИ-ассистенты лучше конкурентов?</h2>
-            <div class="advantages-grid">
-                <div class="advantage-card fade-in delay-1">
-                    <i class="fas fa-plug"></i>
-                    <h3>Простая интеграция</h3>
-                    <p>Запускаем быстро, без сложных технических настроек.</p>
-                </div>
-                <div class="advantage-card fade-in delay-2">
-                    <i class="fas fa-brain"></i>
-                    <h3>Глубокая экспертиза</h3>
-                    <p>Мы не просто кодим, а понимаем бизнес-процессы и знаем, как увеличить продажи.</p>
-                </div>
-                <div class="advantage-card fade-in delay-3">
-                    <i class="fas fa-piggy-bank"></i>
-                    <h3>Экономия на персонале</h3>
-                    <p>Сокращаем затраты на найм менеджеров, но увеличиваем число обработанных заявок.</p>
-                </div>
-                <div class="advantage-card fade-in delay-4">
-                    <i class="fas fa-chart-pie"></i>
-                    <h3>Рост прибыли</h3>
-                    <p>Конверсия в сделки растёт, так как клиенты получают ответы сразу, без ожидания.</p>
-                </div>
-                <div class="advantage-card fade-in delay-5">
-                    <i class="fas fa-sync-alt"></i>
-                    <h3>Полная синхронизация с CRM</h3>
-                    <p>Никаких потерь данных, отчёты и аналитика всегда под рукой.</p>
-                </div>
-            </div>
+        
+        <div class="service-card animate-hover">
+          <svg class="service-icon" viewBox="0 0 32 32">
+            <path d="M24 2H8c-1.1 0-2 .9-2 2v24c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 26H8V4h16v24z" fill="currentColor"/>
+            <path d="M16 26c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM16 6c-2.2 0-4 1.8-4 4v4c0 2.2 1.8 4 4 4s4-1.8 4-4v-4c0-2.2-1.8-4-4-4zm2 8c0 1.1-.9 2-2 2s-2-.9-2-2v-4c0-1.1.9-2 2-2s2 .9 2 2v4z" fill="currentColor"/>
+          </svg>
+          <h3 class="service-title">Регистрация компании в сфере ИИ</h3>
+          <p class="service-description">Хотите создать компанию в сфере ИИ? Свяжитесь с нами, чтобы зарегистрировать ее</p>
         </div>
-    </section>
-
-    <section class="cases" id="cases">
-        <div class="container">
-            <h2 class="fade-in">Наши успешные кейсы</h2>
-            <div class="case-studies">
-                <div class="case-card fade-in delay-1">
-                    <div class="case-icon">
-                        <i class="fas fa-car"></i>
-                    </div>
-                    <div class="case-content">
-                        <h3>Автосалон</h3>
-                        <p>После внедрения чат-бота обработка заявок выросла, а доля пропущенных клиентов снизилась.</p>
-                        <div class="case-metric">
-                            <div class="metric">
-                                <div class="metric-value">+40%</div>
-                                <div class="metric-label">Рост обработки заявок</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">5%</div>
-                                <div class="metric-label">Пропущенных клиентов</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="case-card fade-in delay-2">
-                    <div class="case-icon">
-                        <i class="fas fa-shopping-cart"></i>
-                    </div>
-                    <div class="case-content">
-                        <h3>Интернет-магазин</h3>
-                        <p>Автоматизация общения позволила сократить нагрузку на менеджеров и увеличить средний чек.</p>
-                        <div class="case-metric">
-                            <div class="metric">
-                                <div class="metric-value">x2</div>
-                                <div class="metric-label">Снижение нагрузки</div>
-                            </div>
-                            <div class="metric">
-                                <div class="metric-value">+18%</div>
-                                <div class="metric-label">Рост среднего чека</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testimonial fade-in delay-3">
-                <p>"Сомневались, но после внедрения бот стал нашим лучшим сотрудником – всегда на связи, всегда вежлив, всегда закрывает сделки!"</p>
-                <div class="testimonial-author">- Директор компании "Альфа-Строй"</div>
-            </div>
+        
+        <div class="service-card animate-hover">
+          <svg class="service-icon" viewBox="0 0 32 32">
+            <path d="M28 4H4C2.9 4 2 4.9 2 6v20c0 1.1.9 2 2 2h24c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 22H4V8h24v18z" fill="currentColor"/>
+            <path d="M20 10H6v2h14v-2zM20 14H6v2h14v-2zM20 18H6v2h14v-2zM26 10h-2v2h2v-2zM26 14h-2v2h2v-2zM26 18h-2v2h2v-2z" fill="currentColor"/>
+          </svg>
+          <h3 class="service-title">Расширения браузера на основе ИИ</h3>
+          <p class="service-description">Поднимитесь на волне искусственного интеллекта. Получите расширения для браузера, созданные для продажи другим, и начните зарабатывать.</p>
         </div>
-    </section>
+        
+        <div class="service-card animate-hover">
+          <svg class="service-icon" viewBox="0 0 32 32">
+            <path d="M25 4H7C4.8 4 3 5.8 3 8v16c0 2.2 1.8 4 4 4h18c2.2 0 4-1.8 4-4V8c0-2.2-1.8-4-4-4zm2 20c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V8c0-1.1.9-2 2-2h18c1.1 0 2 .9 2 2v16z" fill="currentColor"/>
+            <path d="M9 10h3v3H9zM9 15h3v3H9zM9 20h3v3H9zM15 10h8v3h-8zM15 15h8v3h-8zM15 20h8v3h-8z" fill="currentColor"/>
+          </svg>
+          <h3 class="service-title">Маркировка данных ИИ</h3>
+          <p class="service-description">Доверьте нам рутинную работу по маркировке данных, чтобы вы могли сосредоточиться на более важных задачах.</p>
+        </div>
+      </div>
+      
+      <div class="service-center animate-fade-in">
+        <h3 class="service-title">Индивидуальные приложения на базе ИИ</h3>
+        <p class="service-description">Воплотите свои идеи в реальность с помощью нас</p>
+      </div>
+    </div>
+  </section>
 
-    <section class="cta" id="contact">
-        <div class="container">
-            <h2 class="fade-in">Готовы начать продавать больше?</h2>
-            <p class="cta-text fade-in delay-1">Оставьте заявку сейчас – получите бесплатную консультацию и демонстрацию чат-бота для вашего бизнеса!</p>
+  <!-- Секция о нас -->
+  <section id="about" class="section section--dark">
+    <div class="container">
+      <span class="section-eyebrow">О нас</span>
+      <div class="about-content animate-fade-in">
+        <h2 class="h2">Создание умных чат-ботов и решений на основе искусственного интеллекта, которые помогают бизнесу расти и развиваться.</h2>
+        <p class="text-lg" style="color: var(--color-text-light-muted);">Мы специализируемся на разработке передовых ИИ-решений, которые трансформируют бизнес и открывают новые возможности в цифровую эпоху. Наша команда экспертов поможет вам интегрировать технологии искусственного интеллекта в вашу бизнес-модель.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Секция процесса -->
+  <section id="process" class="section">
+    <div class="container">
+      <span class="section-eyebrow">Process</span>
+      <h2 class="h2">Простой 3-х этапный процесс</h2>
+      
+      <div class="process-steps">
+        <div class="process-step animate-fade-in">
+          <div class="step-number">01</div>
+          <div class="step-content">
+            <h3 class="step-title">Выберите размер проекта</h3>
+            <p class="step-description">Выберите масштаб идеи, которую вы хотите воплотить в жизнь. Хотите создать расширение для браузера на базе ИИ или получить кучу данных с метками?</p>
+          </div>
+        </div>
+        
+        <div class="process-step animate-fade-in delay-100">
+          <div class="step-number">02</div>
+          <div class="step-content">
+            <h3 class="step-title">Поговорите с квалифицированным представителем</h3>
+            <p class="step-description">На основе вашей идеи один из наших квалифицированных представителей искусственного интеллекта свяжется с вами и поможет вам пройти все этапы. Также поможет в мозговом штурме.</p>
+          </div>
+        </div>
+        
+        <div class="process-step animate-fade-in delay-200">
+          <div class="step-number">03</div>
+          <div class="step-content">
+            <h3 class="step-title">Устройтесь поудобнее и расслабьтесь</h3>
+            <p class="step-description">Мы поняли вас! GPT Infologika создаст желаемый продукт и доставит его вам в кратчайшие сроки, как молния!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Секция контактов -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="contact">
+        <div class="contact__image animate-fade-in">
+          <img src="https://framerusercontent.com/images/zCpoYkPMDJgjVfWjqns954W2Oo.jpg" alt="Contact Us" loading="lazy">
+        </div>
+        
+        <div class="contact__content animate-fade-in delay-100">
+          <span class="section-eyebrow">Обратитесь к нам</span>
+          <h2 class="h3 contact__title">Мы считаем, что цифровой успех - это непрерывный путь</h2>
+          <p class="text-lg" style="margin-bottom: var(--spacing-8);">Начните свой путь к цифровой трансформации вместе с нами. Наши специалисты помогут вам разработать стратегию внедрения искусственного интеллекта, которая принесет реальную пользу вашему бизнесу.</p>
+          <button class="btn btn-primary btn-lg">Начать путь!</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Форма обратной связи -->
+  <section id="feedback" class="section section--alt">
+    <div class="container">
+      <span class="section-eyebrow">Форма обратной связи</span>
+      <h2 class="h2 text-center mx-auto" style="max-width: 800px; margin-bottom: var(--spacing-12);">Свяжитесь с нами</h2>
+      
+      <div class="contact-form-container animate-fade-in">
+        <form class="contact-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name" class="form-label">Ваше имя</label>
+              <div class="input-with-icon">
+                <svg class="form-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="currentColor"/></svg>
+                <input type="text" id="name" class="form-control" placeholder="Введите ваше имя" required>
+              </div>
+            </div>
             
-            <div class="form-container fade-in delay-2">
-                <form id="contactForm">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="name">Ваше имя</label>
-                            <input type="text" id="name" class="form-control" placeholder="Иван Иванов" required>
-                            <div class="error-text" id="nameError">Пожалуйста, укажите ваше имя</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="company">Компания</label>
-                            <input type="text" id="company" class="form-control" placeholder="ООО «Компания»" required>
-                            <div class="error-text" id="companyError">Пожалуйста, укажите название компании</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Телефон</label>
-                            <input type="tel" id="phone" class="form-control" placeholder="+7 (XXX) XXX-XX-XX" required>
-                            <div class="error-text" id="phoneError">Пожалуйста, укажите корректный номер телефона</div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" class="form-control" placeholder="email@example.com" required>
-                            <div class="error-text" id="emailError">Пожалуйста, укажите корректный email</div>
-                        </div>
-                        <div class="form-group form-wide">
-                            <label for="message">Ваш запрос</label>
-                            <textarea id="message" class="form-control" rows="4" placeholder="Опишите ваши потребности..."></textarea>
-                            <div class="error-text" id="messageError">Пожалуйста, опишите ваш запрос</div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn-submit" id="submitBtn">Оставить заявку</button>
-                    <div id="formLoading" class="form-loading">
-                        <span class="spinner"></span> Отправка заявки...
-                    </div>
-            <div class="copyright">
-                &copy; 2025 ИнфоЛогика. Все права защищены.
+            <div class="form-group">
+              <label for="email" class="form-label">Email</label>
+              <div class="input-with-icon">
+                <svg class="form-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/></svg>
+                <input type="email" id="email" class="form-control" placeholder="Введите ваш email" required>
+              </div>
             </div>
+          </div>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="phone" class="form-label">Телефон</label>
+              <div class="input-with-icon">
+                <svg class="form-icon" viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z" fill="currentColor"/></svg>
+                <input type="tel" id="phone" class="form-control" placeholder="Введите ваш телефон">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="subject" class="form-label">Тема</label>
+              <div class="input-with-icon">
+                <svg class="form-icon" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z" fill="currentColor"/></svg>
+                <select id="subject" class="form-control">
+                  <option value="" disabled selected>Выберите тему обращения</option>
+                  <option value="general">Общий вопрос</option>
+                  <option value="project">Новый проект</option>
+                  <option value="support">Техническая поддержка</option>
+                  <option value="pricing">Вопрос о ценах</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="message" class="form-label">Сообщение</label>
+            <div class="input-with-icon message-container">
+              <svg class="form-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" fill="currentColor"/></svg>
+              <textarea id="message" class="form-control" placeholder="Опишите ваш вопрос или проект" rows="6" required></textarea>
+            </div>
+          </div>
+          
+          <div class="form-submit">
+            <button type="submit" class="btn btn-primary btn-lg">Отправить сообщение</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Секция тарифов -->
+  <section id="pricing" class="section section--dark">
+    <div class="container">
+      <span class="section-eyebrow">Pricing</span>
+      <h2 class="h2 text-center mx-auto" style="max-width: 800px;">Единая цена для всех видов искусственного интеллекта!</h2>
+      
+      <div class="pricing-grid">
+        <div class="pricing-card animate-fade-in">
+          <h3 class="pricing-name">Lite</h3>
+          <p class="pricing-description">Начальное решение</p>
+          <div class="pricing-price">$ 599 USD<span class="pricing-price-period">Единоразовый платеж</span></div>
+          
+          <div class="pricing-features">
+            <div class="pricing-feature">1 звонок со специалистом по ИИ</div>
+            <div class="pricing-feature">Приложение с 1-2 функциями ИИ</div>
+            <div class="pricing-feature">Поддержка в течение 7 дней</div>
+          </div>
+          
+          <button class="btn btn-light btn-block js-pricing-btn">Подробнее</button>
         </div>
-                </form>
-            </div>
+        
+        <div class="pricing-card animate-fade-in delay-100">
+          <h3 class="pricing-name">Pro</h3>
+          <p class="pricing-description">Бизнес-решение</p>
+          <div class="pricing-price">$ 1399 USD<span class="pricing-price-period">Единоразовый платеж</span></div>
+          
+          <div class="pricing-features">
+            <div class="pricing-feature">1 звонок со специалистом по ИИ</div>
+            <div class="pricing-feature">Приложение с 2-3 функциями ИИ</div>
+            <div class="pricing-feature">Запуск продукта на платформе</div>
+            <div class="pricing-feature">Поддержка в течение 7 дней</div>
+          </div>
+          
+          <button class="btn btn-light btn-block">Подробнее</button>
         </div>
-    </section>
+        
+        <div class="pricing-card animate-fade-in delay-200">
+          <h3 class="pricing-name">Enterprise</h3>
+          <p class="pricing-description">Корпоративное решение</p>
+          <div class="pricing-price">$ 12,999 USD<span class="pricing-price-period">Единоразовый платеж</span></div>
+          
+          <div class="pricing-features">
+            <div class="pricing-feature">Безлимитные звонки с экспертом</div>
+            <div class="pricing-feature">Комплексное ИИ-приложение</div>
+            <div class="pricing-feature">Запуск продукта на платформе</div>
+            <div class="pricing-feature">2 месяца поддержки</div>
+          </div>
+          
+          <button class="btn btn-light btn-block">Подробнее</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>О нас</h3>
-                    <p>ИнфоЛогика - разработка ИИ-ассистентов, которые помогают бизнесу консультировать, обучать и продавать 24/7 без участия человека.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-telegram"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#"><i class="fab fa-vk"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Услуги</h3>
-                    <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> ИИ-ассистенты для бизнеса</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Интеграция с CRM</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Автоматизация продаж</a></li>
-                        <li><a href="#"><i class="fas fa-chevron-right"></i> Поддержка клиентов 24/7</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Контакты</h3>
-                    <ul class="footer-links">
-                        <li><i class="fas fa-phone"></i> +7 (XXX) XXX-XX-XX</li>
-                        <li><i class="fas fa-envelope"></i> info@infologika.ru</li>
-                        <li><i class="fab fa-telegram"></i> @infologikabot</li>
-                    </ul>
-                </div>
-            </div>
-        <div id="formOverlay" class="form-overlay"></div>
-        <div id="formMessage" class="form-message"></div>
-    </footer>
+  <!-- Секция проектов -->
+  <section id="projects" class="section">
+    <div class="container">
+      <span class="section-eyebrow">Проекты</span>
+     <h2 class="h2">Разработайте свои продукты ИИ уже сегодня!</h2>
+      </p>
+      
+      <div class="projects-grid">
+        <div class="project-card animate-fade-in">
+          <img src="https://framerusercontent.com/images/YB5DEu5B92rspmfwpzNThebSAoE.png" alt="AI Customer Support" loading="lazy">
+          <div class="project-title">Служба поддержки клиентов ИИ</div>
+        </div>
+        
+        <div class="project-card animate-fade-in delay-100">
+          <img src="https://framerusercontent.com/images/UfEUoMJOlwIccGMVP1RJQgIEpo.png" alt="Chat GPT Applications" loading="lazy">
+          <div class="project-title">Приложения Chat GPT</div>
+        </div>
+        
+        <div class="project-card animate-fade-in delay-200">
+          <img src="https://framerusercontent.com/images/uC1XgWgFenanpQJ7N1QXHXarxY.png" alt="AI Applications" loading="lazy">
+          <div class="project-title">Приложения ИИ</div>
+        </div>
+        
+        <div class="project-card animate-fade-in delay-300">
+          <img src="https://framerusercontent.com/images/r8rdB225UP0wSxJBtsZ4XEXDD10.png" alt="Browser Extensions" loading="lazy">
+          <div class="project-title">Расширения для браузера</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mainNav = document.getElementById('mainNav');
+  <!-- Подвал сайта -->
+  <footer id="support" class="footer">
+    <div class="container">
+      <div class="footer__container">
+        <div class="footer__info">
+          <h2 class="footer__logo">GPT Infologika</h2>
+          <p class="footer__description">Разработка приложений на базе искусственного интеллекта по фиксированной ставке</p>
+        </div>
+        
+        <div class="footer__nav">
+          <a href="#services" class="footer__nav-item">Услуги</a>
+          <a href="#process" class="footer__nav-item">Процесс</a>
+          <a href="#pricing" class="footer__nav-item">Цены</a>
+          <a href="#contact" class="footer__nav-item">Контакты</a>
+        </div>
+      </div>
+      
+      <div class="footer__bottom">
+        <div class="footer__contact">
+          <p>Tell: +7(902)371-60-01<br>Telegram: @infologikabot</p>
+          <p class="footer__address">Main office: 2261 Market Street #5394 San Francisco, CA 94114</p>
+        </div>
+      </div>
+    </div>
+  </footer>
 
-        mobileMenuBtn.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Переменные
+      const header = document.getElementById('header');
+      const menuToggle = document.querySelector('.menu-toggle');
+      const mobileMenu = document.querySelector('.mobile-menu');
+      const mobileMenuItems = document.querySelectorAll('.mobile-menu__item');
+      const navItems = document.querySelectorAll('.nav__item');
+      const buttons = document.querySelectorAll('.btn');
+      const pricingButtons = document.querySelectorAll('.js-pricing-btn');
+      
+      // Прикрепление шапки при прокрутке
+      window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+        
+        // Активация текущего раздела в навигации
+        highlightCurrentSection();
+      });
+      
+      // Мобильное меню
+      menuToggle.addEventListener('click', function() {
+        this.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+      });
+      
+      // Обработка кликов на пункты мобильного меню
+      mobileMenuItems.forEach(item => {
+        item.addEventListener('click', function() {
+          mobileMenu.classList.remove('active');
+          menuToggle.classList.remove('active');
+          document.body.classList.remove('menu-open');
         });
-
-        // Scroll Animation
-        const fadeElems = document.querySelectorAll('.fade-in');
-
-        function checkFade() {
-            fadeElems.forEach(elem => {
-                const elemTop = elem.getBoundingClientRect().top;
-                const triggerPoint = window.innerHeight * 0.8;
-                
-                if (elemTop < triggerPoint) {
-                    elem.classList.add('active');
-                }
-            });
+      });
+      
+      // Функция для плавной прокрутки к элементу
+      function scrollToElement(elementId) {
+        const targetElement = document.querySelector(elementId);
+        
+        if (targetElement) {
+          const headerHeight = header.offsetHeight;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+          
+          window.scrollTo({
+            top: targetPosition,
+            behavior: 'smooth'
+          });
         }
-
-        // Initial check
-        checkFade();
-
-        // Check on scroll
-        window.addEventListener('scroll', checkFade);
-
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 70,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if (mainNav.classList.contains('active')) {
-                        mainNav.classList.remove('active');
-                    }
-                }
-            });
+      }
+      
+      // Плавная прокрутка для всех навигационных ссылок
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          
+          if (targetId === '#') return;
+          
+          scrollToElement(targetId);
         });
-
-        // Form validation and submission
-        const contactForm = document.getElementById('contactForm');
-        const formMessage = document.getElementById('formMessage');
-        const formLoading = document.getElementById('formLoading');
-        const formOverlay = document.getElementById('formOverlay');
-        const submitBtn = document.getElementById('submitBtn');
+      });
+      
+      // Функция для выделения активного раздела в меню
+      function highlightCurrentSection() {
+        const scrollPosition = window.scrollY + 200;
         
-        // Input elements
-        const nameInput = document.getElementById('name');
-        const companyInput = document.getElementById('company');
-        const phoneInput = document.getElementById('phone');
-        const emailInput = document.getElementById('email');
-        const messageInput = document.getElementById('message');
+        // Получаем все секции
+        const sections = document.querySelectorAll('section[id]');
         
-        // Error elements
-        const nameError = document.getElementById('nameError');
-        const companyError = document.getElementById('companyError');
-        const phoneError = document.getElementById('phoneError');
-        const emailError = document.getElementById('emailError');
-        const messageError = document.getElementById('messageError');
-        
-        // Validation function
-        function validateForm() {
-            let isValid = true;
+        // Находим текущую секцию
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop - header.offsetHeight;
+          const sectionHeight = section.offsetHeight;
+          const sectionId = section.getAttribute('id');
+          
+          if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            // Удаляем активный класс у всех пунктов меню
+            navItems.forEach(item => item.classList.remove('active'));
             
-            // Reset errors
-            const errorTexts = document.querySelectorAll('.error-text');
-            errorTexts.forEach(error => error.classList.remove('visible'));
-            
-            const inputs = document.querySelectorAll('.form-control');
-            inputs.forEach(input => input.classList.remove('error'));
-            
-            // Validate name
-            if (nameInput.value.trim() === '') {
-                nameInput.classList.add('error');
-                nameError.classList.add('visible');
-                isValid = false;
-            }
-            
-            // Validate company
-            if (companyInput.value.trim() === '') {
-                companyInput.classList.add('error');
-                companyError.classList.add('visible');
-                isValid = false;
-            }
-            
-            // Validate phone (simple check for now)
-            if (phoneInput.value.trim() === '' || phoneInput.value.length < 10) {
-                phoneInput.classList.add('error');
-                phoneError.classList.add('visible');
-                isValid = false;
-            }
-            
-            // Validate email
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(emailInput.value)) {
-                emailInput.classList.add('error');
-                emailError.classList.add('visible');
-                isValid = false;
-            }
-            
-            // Message is optional but if provided, should not be empty
-            if (messageInput.value.trim() !== '' && messageInput.value.trim().length < 5) {
-                messageInput.classList.add('error');
-                messageError.classList.add('visible');
-                isValid = false;
-            }
-            
-            return isValid;
-        }
-        
-        // Form submission
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (!validateForm()) {
-                return;
-            }
-            
-            // Show loading, hide button
-            submitBtn.disabled = true;
-            formLoading.classList.add('active');
-            formMessage.className = 'form-message';
-            
-            // Get form data
-            const formData = {
-                name: nameInput.value.trim(),
-                company: companyInput.value.trim(),
-                phone: phoneInput.value.trim(),
-                email: emailInput.value.trim(),
-                message: messageInput.value.trim()
-            };
-            
-            // Send data to server
-            sendFormData(formData);
+            // Добавляем активный класс нужному пункту
+            document.querySelector(`.nav__item[href="#${sectionId}"]`)?.classList.add('active');
+          }
         });
-        
-        // Function to send data to server
-        function sendFormData(formData) {
-            // Replace with your actual API endpoint
-            const apiUrl = 'https://api.infologika.ru/submit-form';
-            
-            // Simulating API request with timeout (replace this with actual fetch in production)
-            setTimeout(() => {
-                // This simulates a successful response
-                handleSuccess(formData);
-                
-                // Uncomment below to test error handling
-                // handleError('Сервер временно недоступен. Пожалуйста, попробуйте позже.');
-            }, 1500);
-            
-            // Real implementation would use fetch like this:
-            /*
-            fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Ошибка сервера');
-                }
-                return response.json();
-            })
-            .then(data => {
-                handleSuccess(formData);
-            })
-            .catch(error => {
-                handleError('Произошла ошибка при отправке формы. Пожалуйста, попробуйте позже.');
-                console.error('Error:', error);
-            });
-            */
-        }
-        
-        // Handle successful submission
-        function handleSuccess(formData) {
-            // Hide loading indicator
-            formLoading.classList.remove('active');
-            submitBtn.disabled = false;
-            
-            // Show overlay and success message
-            formOverlay.classList.add('active');
-            formMessage.innerHTML = `
-                <i class="fas fa-check-circle" style="color: var(--success); font-size: 24px; margin-bottom: 10px;"></i><br>
-                Спасибо за заявку, ${formData.name}!<br>Мы свяжемся с вами в ближайшее время.
-            `;
-            formMessage.className = 'form-message success';
-            
-            // Reset form
-            contactForm.reset();
-            
-            // Hide success message and overlay after animation
-            setTimeout(() => {
-                formOverlay.classList.remove('active');
-                formMessage.className = 'form-message';
-            }, 5000);
-        }
-        
-        // Handle error
-        function handleError(errorMsg) {
-            // Hide loading indicator
-            formLoading.classList.remove('active');
-            submitBtn.disabled = false;
-            
-            // Show overlay and error message
-            formOverlay.classList.add('active');
-            formMessage.innerHTML = `
-                <i class="fas fa-exclamation-circle" style="color: var(--danger); font-size: 24px; margin-bottom: 10px;"></i><br>
-                ${errorMsg}
-            `;
-            formMessage.className = 'form-message error';
-            
-            // Hide error message and overlay after animation
-            setTimeout(() => {
-                formOverlay.classList.remove('active');
-                formMessage.className = 'form-message';
-            }, 5000);
-        }
-        
-        // Add input listeners to clear errors on type
-        const allInputs = [nameInput, companyInput, phoneInput, emailInput, messageInput];
-        allInputs.forEach(input => {
-            input.addEventListener('input', function() {
-                this.classList.remove('error');
-                const errorElement = document.getElementById(this.id + 'Error');
-                if (errorElement) {
-                    errorElement.classList.remove('visible');
-                }
-            });
+      }
+      
+      // Кнопки действия
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Если кнопка не находится в навигации и не является кнопкой из тарифов
+          if (!this.closest('.mobile-menu') && 
+              !this.closest('.header__container') && 
+              !this.classList.contains('js-pricing-btn')) {
+            scrollToElement('#contact');
+          }
         });
-    </script>
+      });
+      
+      // Кнопки "Подробнее" в тарифах
+      pricingButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          scrollToElement('#feedback');
+          
+          // Предварительный выбор темы в форме
+          const subjectSelect = document.getElementById('subject');
+          if (subjectSelect) {
+            // Выбираем опцию "Вопрос о ценах"
+            for (let i = 0; i < subjectSelect.options.length; i++) {
+              if (subjectSelect.options[i].value === 'pricing') {
+                subjectSelect.selectedIndex = i;
+                break;
+              }
+            }
+          }
+          
+          // Добавляем фокус на поле имени
+          setTimeout(() => {
+            document.getElementById('name').focus();
+          }, 800);
+        });
+      });
+      
+      // Первоначальная проверка активного раздела
+      highlightCurrentSection();
+    });
+  </script>
 </body>
 </html>
