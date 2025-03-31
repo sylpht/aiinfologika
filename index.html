@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="GPT Infologika - разработка приложений на базе искусственного интеллекта по фиксированной ставке">
-  <title>GPT Infologika - Услуги искусственного интеллекта</title>
+  <meta name="description" content="Infologika GPT - разработка приложений на базе искусственного интеллекта по фиксированной цене">
+  <title>Infologika GPT - Услуги искусственного интеллекта</title>
   
   <!-- Favicon -->
   <link rel="icon" href="https://framerusercontent.com/sites/icons/default-favicon-light.v1.png" media="(prefers-color-scheme: light)">
@@ -284,15 +284,15 @@
     
     /* =========== Компоненты =========== */
     .section {
-      padding-top: var(--spacing-16);
-      padding-bottom: var(--spacing-16);
+      padding-top: var(--spacing-24);
+      padding-bottom: var(--spacing-24);
       position: relative;
     }
     
     @media (min-width: 768px) {
       .section {
-        padding-top: var(--spacing-24);
-        padding-bottom: var(--spacing-24);
+        padding-top: var(--spacing-32);
+        padding-bottom: var(--spacing-32);
       }
     }
     
@@ -306,7 +306,7 @@
       font-size: var(--text-xl);
       color: var(--color-text-muted);
       font-weight: var(--font-weight-medium);
-      margin-bottom: var(--spacing-3);
+      margin-bottom: var(--spacing-6);
       display: block;
     }
     
@@ -316,6 +316,7 @@
     
     .section h2 {
       max-width: 800px;
+      margin-bottom: var(--spacing-12);
     }
     
     .about-content {
@@ -379,6 +380,11 @@
     .btn-block {
       display: block;
       width: 100%;
+    }
+    
+    /* Добавляем белый контур кнопкам */
+    .btn-white-outline {
+      border: 2px solid var(--color-white);
     }
     
     /* =========== Шапка сайта =========== */
@@ -549,8 +555,11 @@
     .hero {
       position: relative;
       overflow: hidden;
-      padding-top: var(--spacing-16);
-      padding-bottom: var(--spacing-16);
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background-color: var(--color-bg-dark);
     }
     
     .hero__container {
@@ -559,16 +568,22 @@
       gap: var(--spacing-8);
       position: relative;
       align-items: center;
+      padding-top: calc(var(--spacing-16) + 60px);
+      padding-bottom: var(--spacing-16);
+      height: 100%;
     }
     
     @media (min-width: 1024px) {
       .hero__container {
-        grid-template-columns: 7fr 3fr;
+        grid-template-columns: 6fr 4fr;
+        padding-bottom: var(--spacing-20);
       }
     }
     
     .hero__content {
       padding-right: 0;
+      max-width: 650px;
+      margin: 0 auto;
     }
     
     .hero__title {
@@ -589,117 +604,61 @@
       font-size: var(--text-base);
       margin-bottom: var(--spacing-8);
       opacity: 0.9;
-      max-width: 85%;
+      max-width: 100%;
       line-height: 1.6;
+    }
+    
+    .hero__buttons {
+      margin-top: var(--spacing-8);
     }
     
     .hero__image {
       position: relative;
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
+      margin-top: var(--spacing-8);
     }
     
-    /* AI Graphic Animation */
+    @media (min-width: 1024px) {
+      .hero__image {
+        margin-top: 0;
+      }
+    }
+    
+    /* AI Egg Animation */
     .ai-graphic {
       position: relative;
       width: 200px;
       height: 200px;
-      margin-right: var(--spacing-6);
+      margin: 0 auto;
     }
     
-    .ai-graphic__circle {
+    .ai-egg {
       position: absolute;
-      border-radius: 50%;
-      opacity: 0.6;
-      background: linear-gradient(135deg, rgba(56, 85, 179, 0.8), rgba(106, 139, 255, 0.4));
-      animation: pulse 3s infinite alternate;
-    }
-    
-    .ai-graphic__circle--1 {
-      width: 100px;
-      height: 100px;
+      width: 150px;
+      height: 200px;
+      background-color: white;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      z-index: 3;
-      animation-delay: 0s;
-      background: linear-gradient(135deg, rgba(56, 85, 179, 0.9), rgba(106, 139, 255, 0.7));
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+      animation: float 3s ease-in-out infinite;
     }
     
-    .ai-graphic__circle--2 {
-      width: 140px;
-      height: 140px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-      animation-delay: 0.5s;
-    }
-    
-    .ai-graphic__circle--3 {
-      width: 180px;
-      height: 180px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-      animation-delay: 1s;
-      opacity: 0.3;
-    }
-    
-    .ai-graphic__lines {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border-radius: 50%;
-      border: 1px dashed rgba(255, 255, 255, 0.3);
-      box-shadow: 0 0 30px rgba(56, 85, 179, 0.3);
-      animation: rotate 20s linear infinite;
-    }
-    
-    .ai-graphic__lines::before,
-    .ai-graphic__lines::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      border: 1px dashed rgba(255, 255, 255, 0.2);
-    }
-    
-    .ai-graphic__lines::before {
-      width: 80%;
-      height: 80%;
-      animation: rotate 15s linear infinite reverse;
-    }
-    
-    .ai-graphic__lines::after {
-      width: 60%;
-      height: 60%;
-      animation: rotate 10s linear infinite;
-    }
-    
-    @keyframes pulse {
+    @keyframes float {
       0% {
-        transform: translate(-50%, -50%) scale(0.8);
-        opacity: 0.3;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      }
+      50% {
+        transform: translate(-50%, -60%);
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
       }
       100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.7;
-      }
-    }
-    
-    @keyframes rotate {
-      0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-      }
-      100% {
-        transform: translate(-50%, -50%) rotate(360deg);
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
       }
     }
     
@@ -707,7 +666,8 @@
     .services__grid {
       display: grid;
       grid-template-columns: repeat(1, 1fr);
-      gap: var(--spacing-6);
+      gap: var(--spacing-8);
+      margin-bottom: var(--spacing-16);
     }
     
     @media (min-width: 640px) {
@@ -723,7 +683,7 @@
     }
     
     .service-card {
-      padding: var(--spacing-6);
+      padding: var(--spacing-8);
       border-radius: var(--radius-lg);
       height: 100%;
       background-color: var(--color-white);
@@ -761,20 +721,18 @@
     .service-center {
       text-align: center;
       max-width: 600px;
-      margin: var(--spacing-16) auto 0;
-      padding: var(--spacing-8);
+      margin: 0 auto;
+      padding: var(--spacing-10);
       background-color: var(--color-gray-100);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-md);
     }
     
-    /* =========== О нас =========== */
-    .about-content {
-      max-width: 900px;
-      margin: 0 auto;
+    /* =========== Процесс =========== */
+    .process-steps {
+      margin-top: var(--spacing-16);
     }
     
-    /* =========== Процесс =========== */
     .process-step {
       display: flex;
       flex-direction: column;
@@ -879,104 +837,21 @@
       letter-spacing: var(--letter-spacing-tight);
     }
     
-    /* =========== Форма обратной связи =========== */
     .section--alt {
       background-color: var(--color-gray-50);
-    }
-    
-    .contact-form-container {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    
-    .contact-form {
-      padding: var(--spacing-8);
-      background-color: var(--color-white);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-lg);
-      border: 1px solid var(--color-gray-200);
-    }
-    
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: var(--spacing-6);
-      margin-bottom: var(--spacing-6);
-    }
-    
-    @media (min-width: 768px) {
-      .form-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    
-    .form-group {
-      margin-bottom: var(--spacing-6);
-    }
-    
-    .form-label {
-      display: block;
-      margin-bottom: var(--spacing-2);
-      font-weight: var(--font-weight-medium);
-      color: var(--color-gray-700);
-    }
-    
-    .input-with-icon {
-      position: relative;
-    }
-    
-    .form-icon {
-      position: absolute;
-      left: var(--spacing-4);
-      top: 50%;
-      transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-      color: var(--color-gray-500);
-    }
-    
-    .message-container .form-icon {
-      top: var(--spacing-4);
-      transform: none;
-    }
-    
-    .form-control {
-      width: 100%;
-      padding: var(--spacing-4) var(--spacing-4) var(--spacing-4) var(--spacing-10);
-      border: 1px solid var(--color-gray-300);
-      border-radius: var(--radius-md);
-      background-color: var(--color-white);
-      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-      font-size: var(--text-base);
-    }
-    
-    .form-control:focus {
-      border-color: var(--color-accent);
-      outline: none;
-      box-shadow: 0 0 0 3px rgba(56, 85, 179, 0.2);
-    }
-    
-    textarea.form-control {
-      min-height: 150px;
-      resize: vertical;
-    }
-    
-    .form-submit {
-      text-align: center;
-      margin-top: var(--spacing-8);
-    }
-    
-    .form-submit .btn {
-      min-width: 200px;
     }
     
     /* =========== Тарифы =========== */
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(1, 1fr);
-      gap: var(--spacing-6);
-      margin: var(--spacing-12) auto 0;
+      gap: var(--spacing-10);
+      margin: var(--spacing-16) auto 0;
       max-width: 1200px;
+    }
+    
+    .ruble-sign {
+      font-family: Arial, sans-serif;
     }
     
     @media (min-width: 768px) {
@@ -988,7 +863,7 @@
     .pricing-card {
       background-color: rgba(255, 255, 255, 0.05);
       border-radius: var(--radius-lg);
-      padding: var(--spacing-6);
+      padding: var(--spacing-8);
       transition: transform var(--transition-normal);
       height: 100%;
       display: flex;
@@ -1004,15 +879,15 @@
     .pricing-name {
       font-size: var(--text-2xl);
       font-weight: var(--font-weight-semibold);
-      margin-bottom: var(--spacing-3);
+      margin-bottom: var(--spacing-4);
       color: white;
-      padding-bottom: var(--spacing-3);
+      padding-bottom: var(--spacing-4);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
     
     .pricing-description {
       color: rgba(255, 255, 255, 0.7);
-      margin-bottom: var(--spacing-4);
+      margin-bottom: var(--spacing-6);
       font-size: var(--text-sm);
       height: 40px;
       display: flex;
@@ -1023,7 +898,7 @@
     .pricing-price {
       font-size: var(--text-3xl);
       font-weight: var(--font-weight-bold);
-      margin-bottom: var(--spacing-4);
+      margin-bottom: var(--spacing-6);
       color: white;
       display: block;
       text-align: center;
@@ -1039,21 +914,21 @@
     
     .pricing-features {
       flex: 1;
-      margin-bottom: var(--spacing-4);
-      padding-top: var(--spacing-4);
+      margin-bottom: var(--spacing-8);
+      padding-top: var(--spacing-6);
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       text-align: left;
     }
     
     .pricing-feature {
-      padding: var(--spacing-2) 0;
+      padding: var(--spacing-3) 0;
       position: relative;
-      padding-left: var(--spacing-6);
+      padding-left: var(--spacing-8);
       color: white;
       font-size: var(--text-sm);
-      margin-bottom: var(--spacing-2);
+      margin-bottom: var(--spacing-3);
       display: block;
-      line-height: 1.4;
+      line-height: 1.5;
     }
     
     .pricing-feature::before {
@@ -1084,11 +959,12 @@
       box-shadow: 0 5px 15px rgba(56, 85, 179, 0.4);
     }
     
-    /* =========== Проекты =========== */
+    /* Проекты */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(1, 1fr);
-      gap: var(--spacing-8);
+      gap: var(--spacing-6);
+      margin-top: var(--spacing-12);
     }
     
     @media (min-width: 768px) {
@@ -1097,47 +973,55 @@
       }
     }
     
+    /* Цвета карточек проектов */
     .project-card {
       position: relative;
       border-radius: var(--radius-lg);
-      overflow: hidden;
-      height: 360px;
-      cursor: pointer;
+      padding: var(--spacing-6);
+      height: auto;
+      min-height: 220px;
+      background-color: var(--color-accent);
       box-shadow: var(--shadow-lg);
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+      color: var(--color-white);
+      display: flex;
+      flex-direction: column;
     }
     
-    .project-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, 
-                  rgba(0, 0, 0, 0.8), 
-                  rgba(0, 0, 0, 0.4) 30%, 
-                  transparent 60%);
-      z-index: 1;
-    }
-    
-    .project-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform var(--transition-normal);
-    }
-    
-    .project-card:hover img {
-      transform: scale(1.05);
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-xl);
     }
     
     .project-title {
-      position: absolute;
-      bottom: var(--spacing-6);
-      left: var(--spacing-6);
-      right: var(--spacing-6);
-      color: var(--color-white);
-      font-size: var(--text-2xl);
+      font-size: var(--text-xl);
       font-weight: var(--font-weight-semibold);
-      z-index: 2;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      margin-bottom: var(--spacing-4);
+      color: var(--color-white);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .project-description {
+      color: var(--color-white);
+      font-size: var(--text-sm);
+      margin-bottom: var(--spacing-4);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    .project-feature {
+      margin-bottom: var(--spacing-2);
+      position: relative;
+      padding-left: var(--spacing-8);
+      color: rgba(255, 255, 255, 0.9);
+      font-size: var(--text-xs);
+      line-height: 1.5;
+    }
+    
+    .project-feature::before {
+      content: "✅";
+      position: absolute;
+      left: 0;
+      top: 2px;
     }
     
     /* =========== Подвал =========== */
@@ -1205,6 +1089,41 @@
     
     .footer__address {
       margin-top: var(--spacing-4);
+    }
+    
+    /* Кнопка "Наверх" */
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--color-accent);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s, background-color 0.3s;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      background-color: var(--color-primary);
+    }
+    
+    .back-to-top svg {
+      width: 20px;
+      height: 20px;
     }
     
     /* =========== Адаптивные стили =========== */
@@ -1289,19 +1208,18 @@
   <header class="header" id="header">
     <div class="container header__container">
       <a href="#" class="logo">
-        <img class="logo__image" src="https://framerusercontent.com/images/woWZ3R2Shy2w76TJ2jtGxpGKZA.png" alt="GPT Infologika Logo">
-        <span class="visually-hidden">GPT Infologika</span>
+        <img class="logo__image" src="https://framerusercontent.com/images/woWZ3R2Shy2w76TJ2jtGxpGKZA.png" alt="Infologika GPT Logo">
+        <span class="visually-hidden">Infologika GPT</span>
       </a>
       
       <nav class="nav">
-        <a href="#services" class="nav__item">Сервисы</a>
         <a href="#process" class="nav__item">Процессы</a>
         <a href="#pricing" class="nav__item">Цены</a>
         <a href="#contact" class="nav__item">Контакты</a>
         <a href="#support" class="nav__item">Служба поддержки</a>
       </nav>
       
-      <button class="btn btn-primary">Закажите сейчас!</button>
+      <a href="#contact" class="btn btn-primary">Связаться с нами</a>
       
       <div class="menu-toggle">
         <span class="menu-toggle__icon"></span>
@@ -1312,7 +1230,6 @@
   <!-- Мобильное меню -->
   <div class="mobile-menu">
     <nav class="mobile-menu__nav">
-      <a href="#services" class="mobile-menu__item">Сервисы</a>
       <a href="#process" class="mobile-menu__item">Процессы</a>
       <a href="#pricing" class="mobile-menu__item">Цены</a>
       <a href="#contact" class="mobile-menu__item">Контакты</a>
@@ -1320,36 +1237,36 @@
     </nav>
     
     <div class="mobile-menu__button">
-      <button class="btn btn-primary btn-lg">Закажите сейчас!</button>
+      <a href="https://forms.gle/gT5pDKcZxtP6VK938" class="btn btn-primary btn-lg btn-white-outline">Предложить идею</a>
     </div>
   </div>
 
   <!-- Главный баннер -->
   <section id="hero" class="section section--dark hero">
     <div class="container hero__container">
+      <!-- Правильное центрирование через padding -->
       <div class="hero__content animate-fade-in">
-        <span class="section-eyebrow">The GPT Infologika</span>
+        <span class="section-eyebrow">Infologika GPT</span>
         <h1 class="hero__title">Превратите свои идеи ИИ в продукты, приносящие доход</h1>
-        <p class="hero__text">Мы помогаем инноваторам и предпринимателям создавать передовые решения на базе искусственного интеллекта. От концепции до готового продукта — с нами это проще, чем вы думаете.</p>
-        <button class="btn btn-light btn-lg">Начать действовать</button>
+        <p class="hero__text">Мы помогаем инноваторам и предпринимателям создавать передовые решения с использованием машинного обучения и нейросетей. От концепции до готового продукта — с нами это проще, чем вы думаете.</p>
+        <div class="hero__buttons">
+          <a href="https://forms.gle/gT5pDKcZxtP6VK938" class="btn btn-light btn-lg btn-white-outline">Предложить идею</a>
+        </div>
       </div>
       
       <div class="hero__image animate-fade-in delay-200">
         <div class="ai-graphic">
-          <div class="ai-graphic__circle ai-graphic__circle--1"></div>
-          <div class="ai-graphic__circle ai-graphic__circle--2"></div>
-          <div class="ai-graphic__circle ai-graphic__circle--3"></div>
-          <div class="ai-graphic__lines"></div>
+          <div class="ai-egg"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Секция услуг -->
+  <!-- Секция: что мы создаем -->
   <section id="services" class="section">
     <div class="container">
-      <span class="section-eyebrow">Сервисы</span>
-      <h2 class="h2">Что мы создаем</h2>
+      <span class="section-eyebrow">Наши сервисы</span>
+      <h2 class="h2">Создаем интеллектуальные решения для бизнеса</h2>
       
       <div class="services__grid">
         <div class="service-card animate-hover">
@@ -1367,8 +1284,8 @@
             <path d="M16 4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2s2-.9 2-2V6c0-1.1-.9-2-2-2z" fill="currentColor"/>
             <path d="M21.4 9.4L16 14.8l-5.4-5.4-1.4 1.4L16 17.6l6.8-6.8z" fill="currentColor"/>
           </svg>
-          <h3 class="service-title">ИИ Чат-боты</h3>
-          <p class="service-description">Получите чат-бота на базе ИИ для использования или продажи другим</p>
+          <h3 class="service-title">Умные чат-боты</h3>
+          <p class="service-description">Получите интерактивного помощника для вашего бизнеса или в качестве готового продукта для продажи</p>
         </div>
         
         <div class="service-card animate-hover">
@@ -1377,8 +1294,8 @@
             <path d="M9 16c0 .6.4 1 1 1h12c.6 0 1-.4 1-1s-.4-1-1-1H10c-.6 0-1 .4-1 1z" fill="currentColor"/>
             <path d="M9 20c0 .6.4 1 1 1h12c.6 0 1-.4 1-1s-.4-1-1-1H10c-.6 0-1 .4-1 1z" fill="currentColor"/>
           </svg>
-          <h3 class="service-title">Веб-приложения на основе ИИ</h3>
-          <p class="service-description">Получите веб-приложения на базе ИИ, созданные для вас или для продажи</p>
+          <h3 class="service-title">Интеллектуальные веб-приложения</h3>
+          <p class="service-description">Создаем современные веб-решения с искусственным интеллектом: от простых утилит до комплексных платформ</p>
         </div>
         
         <div class="service-card animate-hover">
@@ -1386,8 +1303,8 @@
             <path d="M24 2H8c-1.1 0-2 .9-2 2v24c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 26H8V4h16v24z" fill="currentColor"/>
             <path d="M16 26c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM16 6c-2.2 0-4 1.8-4 4v4c0 2.2 1.8 4 4 4s4-1.8 4-4v-4c0-2.2-1.8-4-4-4zm2 8c0 1.1-.9 2-2 2s-2-.9-2-2v-4c0-1.1.9-2 2-2s2 .9 2 2v4z" fill="currentColor"/>
           </svg>
-          <h3 class="service-title">Регистрация компании в сфере ИИ</h3>
-          <p class="service-description">Хотите создать компанию в сфере ИИ? Свяжитесь с нами, чтобы зарегистрировать ее</p>
+          <h3 class="service-title">Регистрация технологичных стартапов</h3>
+          <p class="service-description">Помогаем с юридическими аспектами открытия бизнеса в сфере искусственного интеллекта</p>
         </div>
         
         <div class="service-card animate-hover">
@@ -1395,8 +1312,8 @@
             <path d="M28 4H4C2.9 4 2 4.9 2 6v20c0 1.1.9 2 2 2h24c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 22H4V8h24v18z" fill="currentColor"/>
             <path d="M20 10H6v2h14v-2zM20 14H6v2h14v-2zM20 18H6v2h14v-2zM26 10h-2v2h2v-2zM26 14h-2v2h2v-2zM26 18h-2v2h2v-2z" fill="currentColor"/>
           </svg>
-          <h3 class="service-title">Расширения браузера на основе ИИ</h3>
-          <p class="service-description">Поднимитесь на волне искусственного интеллекта. Получите расширения для браузера, созданные для продажи другим, и начните зарабатывать.</p>
+          <h3 class="service-title">Умные расширения для браузеров</h3>
+          <p class="service-description">Поднимитесь на волне новых технологий. Создаем продаваемые расширения с интеллектуальными функциями.</p>
         </div>
         
         <div class="service-card animate-hover">
@@ -1404,25 +1321,14 @@
             <path d="M25 4H7C4.8 4 3 5.8 3 8v16c0 2.2 1.8 4 4 4h18c2.2 0 4-1.8 4-4V8c0-2.2-1.8-4-4-4zm2 20c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V8c0-1.1.9-2 2-2h18c1.1 0 2 .9 2 2v16z" fill="currentColor"/>
             <path d="M9 10h3v3H9zM9 15h3v3H9zM9 20h3v3H9zM15 10h8v3h-8zM15 15h8v3h-8zM15 20h8v3h-8z" fill="currentColor"/>
           </svg>
-          <h3 class="service-title">Маркировка данных ИИ</h3>
-          <p class="service-description">Доверьте нам рутинную работу по маркировке данных, чтобы вы могли сосредоточиться на более важных задачах.</p>
+          <h3 class="service-title">Обработка и маркировка данных</h3>
+          <p class="service-description">Доверьте нам рутинную работу по подготовке данных для обучения ваших интеллектуальных систем.</p>
         </div>
       </div>
       
       <div class="service-center animate-fade-in">
-        <h3 class="service-title">Индивидуальные приложения на базе ИИ</h3>
-        <p class="service-description">Воплотите свои идеи в реальность с помощью нас</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Секция о нас -->
-  <section id="about" class="section section--dark">
-    <div class="container">
-      <span class="section-eyebrow">О нас</span>
-      <div class="about-content animate-fade-in">
-        <h2 class="h2">Создание умных чат-ботов и решений на основе искусственного интеллекта, которые помогают бизнесу расти и развиваться.</h2>
-        <p class="text-lg" style="color: var(--color-text-light-muted);">Мы специализируемся на разработке передовых ИИ-решений, которые трансформируют бизнес и открывают новые возможности в цифровую эпоху. Наша команда экспертов поможет вам интегрировать технологии искусственного интеллекта в вашу бизнес-модель.</p>
+        <h3 class="service-title">Индивидуальные цифровые решения</h3>
+        <p class="service-description">Воплотите свои идеи в реальность с помощью современных технологий</p>
       </div>
     </div>
   </section>
@@ -1430,23 +1336,23 @@
   <!-- Секция процесса -->
   <section id="process" class="section">
     <div class="container">
-      <span class="section-eyebrow">Process</span>
+      <span class="section-eyebrow">Как мы работаем</span>
       <h2 class="h2">Простой 3-х этапный процесс</h2>
       
       <div class="process-steps">
         <div class="process-step animate-fade-in">
           <div class="step-number">01</div>
           <div class="step-content">
-            <h3 class="step-title">Выберите размер проекта</h3>
-            <p class="step-description">Выберите масштаб идеи, которую вы хотите воплотить в жизнь. Хотите создать расширение для браузера на базе ИИ или получить кучу данных с метками?</p>
+            <h3 class="step-title">Опишите вашу идею</h3>
+            <p class="step-description">Опишите вашу идею, и мы подберем оптимальное решение. Это может быть как компактное ИИ-приложение для отправки отчетов, так и сложная система для сбора структурированных данных с аналитикой.</p>
           </div>
         </div>
         
         <div class="process-step animate-fade-in delay-100">
           <div class="step-number">02</div>
           <div class="step-content">
-            <h3 class="step-title">Поговорите с квалифицированным представителем</h3>
-            <p class="step-description">На основе вашей идеи один из наших квалифицированных представителей искусственного интеллекта свяжется с вами и поможет вам пройти все этапы. Также поможет в мозговом штурме.</p>
+            <h3 class="step-title">Поговорите с экспертом</h3>
+            <p class="step-description">Вашим проектом займется персональный менеджер — специалист в области искусственного интеллекта. Он проведет детальный анализ задачи, предложит варианты реализации и поможет доработать концепцию.</p>
           </div>
         </div>
         
@@ -1454,7 +1360,7 @@
           <div class="step-number">03</div>
           <div class="step-content">
             <h3 class="step-title">Устройтесь поудобнее и расслабьтесь</h3>
-            <p class="step-description">Мы поняли вас! GPT Infologika создаст желаемый продукт и доставит его вам в кратчайшие сроки, как молния!</p>
+            <p class="step-description">Остальное берем на себя! Команда Infologika GPT оперативно разработает продукт и предоставит готовое решение в согласованные сроки. Ваша задача — оценить результат, сидя в удобном кресле с чашкой кофе.</p>
           </div>
         </div>
       </div>
@@ -1473,127 +1379,63 @@
           <span class="section-eyebrow">Обратитесь к нам</span>
           <h2 class="h3 contact__title">Мы считаем, что цифровой успех - это непрерывный путь</h2>
           <p class="text-lg" style="margin-bottom: var(--spacing-8);">Начните свой путь к цифровой трансформации вместе с нами. Наши специалисты помогут вам разработать стратегию внедрения искусственного интеллекта, которая принесет реальную пользу вашему бизнесу.</p>
-          <button class="btn btn-primary btn-lg">Начать путь!</button>
+          <a href="https://forms.gle/gT5pDKcZxtP6VK938" class="btn btn-primary btn-lg">Связаться с нами</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Форма обратной связи -->
-  <section id="feedback" class="section section--alt">
-    <div class="container">
-      <span class="section-eyebrow">Форма обратной связи</span>
-      <h2 class="h2 text-center mx-auto" style="max-width: 800px; margin-bottom: var(--spacing-12);">Свяжитесь с нами</h2>
-      
-      <div class="contact-form-container animate-fade-in">
-        <form class="contact-form">
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="name" class="form-label">Ваше имя</label>
-              <div class="input-with-icon">
-                <svg class="form-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="currentColor"/></svg>
-                <input type="text" id="name" class="form-control" placeholder="Введите ваше имя" required>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label for="email" class="form-label">Email</label>
-              <div class="input-with-icon">
-                <svg class="form-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="currentColor"/></svg>
-                <input type="email" id="email" class="form-control" placeholder="Введите ваш email" required>
-              </div>
-            </div>
-          </div>
-          
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="phone" class="form-label">Телефон</label>
-              <div class="input-with-icon">
-                <svg class="form-icon" viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56-.35-.12-.74-.03-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z" fill="currentColor"/></svg>
-                <input type="tel" id="phone" class="form-control" placeholder="Введите ваш телефон">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label for="subject" class="form-label">Тема</label>
-              <div class="input-with-icon">
-                <svg class="form-icon" viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z" fill="currentColor"/></svg>
-                <select id="subject" class="form-control">
-                  <option value="" disabled selected>Выберите тему обращения</option>
-                  <option value="general">Общий вопрос</option>
-                  <option value="project">Новый проект</option>
-                  <option value="support">Техническая поддержка</option>
-                  <option value="pricing">Вопрос о ценах</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          
-          <div class="form-group">
-            <label for="message" class="form-label">Сообщение</label>
-            <div class="input-with-icon message-container">
-              <svg class="form-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z" fill="currentColor"/></svg>
-              <textarea id="message" class="form-control" placeholder="Опишите ваш вопрос или проект" rows="6" required></textarea>
-            </div>
-          </div>
-          
-          <div class="form-submit">
-            <button type="submit" class="btn btn-primary btn-lg">Отправить сообщение</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
+
 
   <!-- Секция тарифов -->
   <section id="pricing" class="section section--dark">
     <div class="container">
-      <span class="section-eyebrow">Pricing</span>
-      <h2 class="h2 text-center mx-auto" style="max-width: 800px;">Единая цена для всех видов искусственного интеллекта!</h2>
+      <span class="section-eyebrow">Цены</span>
+      <h2 class="h2 text-center mx-auto" style="max-width: 800px;">Одна цена для всех интеллектуальных решений!</h2>
       
       <div class="pricing-grid">
         <div class="pricing-card animate-fade-in">
           <h3 class="pricing-name">Lite</h3>
           <p class="pricing-description">Начальное решение</p>
-          <div class="pricing-price">$ 599 USD<span class="pricing-price-period">Единоразовый платеж</span></div>
+          <div class="pricing-price">5 000 <span class="ruble-sign">₽</span><span class="pricing-price-period">Единоразовый платеж</span></div>
           
           <div class="pricing-features">
-            <div class="pricing-feature">1 звонок со специалистом по ИИ</div>
-            <div class="pricing-feature">Приложение с 1-2 функциями ИИ</div>
+            <div class="pricing-feature">1 звонок со специалистом по нейросетям</div>
+            <div class="pricing-feature">Приложение с 1-2 интеллектуальными функциями</div>
             <div class="pricing-feature">Поддержка в течение 7 дней</div>
           </div>
           
-          <button class="btn btn-light btn-block js-pricing-btn">Подробнее</button>
+          <a href="https://forms.gle/gT5pDKcZxtP6VK938" class="btn btn-light btn-block">Заказать</a>
         </div>
         
         <div class="pricing-card animate-fade-in delay-100">
           <h3 class="pricing-name">Pro</h3>
           <p class="pricing-description">Бизнес-решение</p>
-          <div class="pricing-price">$ 1399 USD<span class="pricing-price-period">Единоразовый платеж</span></div>
+          <div class="pricing-price">100 000 <span class="ruble-sign">₽</span><span class="pricing-price-period">Единоразовый платеж</span></div>
           
           <div class="pricing-features">
-            <div class="pricing-feature">1 звонок со специалистом по ИИ</div>
-            <div class="pricing-feature">Приложение с 2-3 функциями ИИ</div>
+            <div class="pricing-feature">1 звонок с техническим экспертом</div>
+            <div class="pricing-feature">Приложение с 2-3 умными функциями</div>
             <div class="pricing-feature">Запуск продукта на платформе</div>
             <div class="pricing-feature">Поддержка в течение 7 дней</div>
           </div>
           
-          <button class="btn btn-light btn-block">Подробнее</button>
+          <a href="https://forms.gle/gT5pDKcZxtP6VK938" class="btn btn-light btn-block">Заказать</a>
         </div>
         
         <div class="pricing-card animate-fade-in delay-200">
           <h3 class="pricing-name">Enterprise</h3>
           <p class="pricing-description">Корпоративное решение</p>
-          <div class="pricing-price">$ 12,999 USD<span class="pricing-price-period">Единоразовый платеж</span></div>
+          <div class="pricing-price">500 000 <span class="ruble-sign">₽</span><span class="pricing-price-period">Единоразовый платеж</span></div>
           
           <div class="pricing-features">
             <div class="pricing-feature">Безлимитные звонки с экспертом</div>
-            <div class="pricing-feature">Комплексное ИИ-приложение</div>
+            <div class="pricing-feature">Комплексное интеллектуальное решение</div>
             <div class="pricing-feature">Запуск продукта на платформе</div>
             <div class="pricing-feature">2 месяца поддержки</div>
           </div>
           
-          <button class="btn btn-light btn-block">Подробнее</button>
+          <a href="https://forms.gle/gT5pDKcZxtP6VK938" class="btn btn-light btn-block">Заказать</a>
         </div>
       </div>
     </div>
@@ -1603,28 +1445,49 @@
   <section id="projects" class="section">
     <div class="container">
       <span class="section-eyebrow">Проекты</span>
-     <h2 class="h2">Разработайте свои продукты ИИ уже сегодня!</h2>
-      </p>
+      <h2 class="h2">Разработайте свои умные продукты уже сегодня!</h2>
       
       <div class="projects-grid">
         <div class="project-card animate-fade-in">
-          <img src="https://framerusercontent.com/images/YB5DEu5B92rspmfwpzNThebSAoE.png" alt="AI Customer Support" loading="lazy">
-          <div class="project-title">Служба поддержки клиентов ИИ</div>
+          <div class="project-title">Закажи цифрового ассистента для поддержки клиентов</div>
+          <div class="project-description">
+            <p>Ваш клиент получает персонализированные ответы на основе актуальных данных вашей компании (технология RAG)!</p>
+            <p>Почему это прорыв?</p>
+            <p class="project-feature">Говорит на языке вашего бренда — использует ваши документы, базу знаний и CRM, чтобы давать точные ответы.</p>
+            <p class="project-feature">Собирает данные в диалоге — анализирует запросы, уточняет детали, фиксирует контакты, заносит данные в CRM.</p>
+            <p class="project-feature">Обучается на лету — RAG позволяет обновлять информацию без переобучения модели.</p>
+          </div>
         </div>
         
         <div class="project-card animate-fade-in delay-100">
-          <img src="https://framerusercontent.com/images/UfEUoMJOlwIccGMVP1RJQgIEpo.png" alt="Chat GPT Applications" loading="lazy">
-          <div class="project-title">Приложения Chat GPT</div>
+          <div class="project-title">Закажи умного ассистента для продаж</div>
+          <div class="project-description">
+            <p>Почему это прорыв?</p>
+            <p class="project-feature">Поднимает конверсию на 30% через мгновенные ответы и персонализацию.</p>
+            <p class="project-feature">Убивает рутину: сам обрабатывает заявки, собирает данные, информирует клиентов.</p>
+            <p class="project-feature">Автоматизирует лидогенерацию: сам обрабатывает заявки, собирает контакты, назначает встречи, синхронизирует с CRM.</p>
+            <p class="project-feature">Работает 24/7 без ошибок, учится на данных и масштабирует продажи.</p>
+          </div>
         </div>
         
         <div class="project-card animate-fade-in delay-200">
-          <img src="https://framerusercontent.com/images/uC1XgWgFenanpQJ7N1QXHXarxY.png" alt="AI Applications" loading="lazy">
-          <div class="project-title">Приложения ИИ</div>
+          <div class="project-title">Готовые смарт-решения для бизнеса</div>
+          <div class="project-description">
+            <p>Мы разрабатываем современные интеллектуальные системы с учетом потребностей вашего бизнеса.</p>
+            <p class="project-feature">Быстрый запуск благодаря готовым компонентам</p>
+            <p class="project-feature">Интеграция с существующими системами</p>
+            <p class="project-feature">Техническая поддержка и обновления</p>
+          </div>
         </div>
         
         <div class="project-card animate-fade-in delay-300">
-          <img src="https://framerusercontent.com/images/r8rdB225UP0wSxJBtsZ4XEXDD10.png" alt="Browser Extensions" loading="lazy">
-          <div class="project-title">Расширения для браузера</div>
+          <div class="project-title">Интеграция с вашими системами</div>
+          <div class="project-description">
+            <p>Объединяем ваши бизнес-процессы с возможностями искусственного интеллекта.</p>
+            <p class="project-feature">Подключение к CRM, ERP и другим системам</p>
+            <p class="project-feature">Автоматизация рутинных задач</p>
+            <p class="project-feature">Безопасный обмен данными</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1635,12 +1498,11 @@
     <div class="container">
       <div class="footer__container">
         <div class="footer__info">
-          <h2 class="footer__logo">GPT Infologika</h2>
-          <p class="footer__description">Разработка приложений на базе искусственного интеллекта по фиксированной ставке</p>
+          <h2 class="footer__logo">Infologika GPT</h2>
+          <p class="footer__description">Разработка приложений на базе искусственного интеллекта по фиксированной цене</p>
         </div>
         
         <div class="footer__nav">
-          <a href="#services" class="footer__nav-item">Услуги</a>
           <a href="#process" class="footer__nav-item">Процесс</a>
           <a href="#pricing" class="footer__nav-item">Цены</a>
           <a href="#contact" class="footer__nav-item">Контакты</a>
@@ -1649,12 +1511,18 @@
       
       <div class="footer__bottom">
         <div class="footer__contact">
-          <p>Tell: +7(902)371-60-01<br>Telegram: @infologikabot</p>
-          <p class="footer__address">Main office: 2261 Market Street #5394 San Francisco, CA 94114</p>
+          <p>Tell: +7(902)371-60-01<br>Telegram: @infologikabot<br>Email: Infologika2@gmail.com</p>
         </div>
       </div>
     </div>
   </footer>
+
+  <!-- Кнопка возврата наверх -->
+  <div id="backToTop" class="back-to-top" aria-label="Вернуться наверх">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </div>
 
   <!-- JavaScript -->
   <script>
@@ -1666,9 +1534,9 @@
       const mobileMenuItems = document.querySelectorAll('.mobile-menu__item');
       const navItems = document.querySelectorAll('.nav__item');
       const buttons = document.querySelectorAll('.btn');
-      const pricingButtons = document.querySelectorAll('.js-pricing-btn');
+      const backToTop = document.getElementById('backToTop');
       
-      // Прикрепление шапки при прокрутке
+      // Прикрепление шапки при прокрутке и показ кнопки "наверх"
       window.addEventListener('scroll', function() {
         if (window.scrollY > 50) {
           header.classList.add('scrolled');
@@ -1676,9 +1544,30 @@
           header.classList.remove('scrolled');
         }
         
+        // Показать/скрыть кнопку "Наверх"
+        if (backToTop) {
+          if (window.scrollY > 300) {
+            backToTop.classList.add('visible');
+          } else {
+            backToTop.classList.remove('visible');
+          }
+        }
+        
         // Активация текущего раздела в навигации
         highlightCurrentSection();
       });
+      
+      // Проверяем наличие кнопки перед добавлением обработчика
+      if (backToTop) {
+        backToTop.addEventListener('click', function() {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      } else {
+        console.error('Кнопка "Наверх" не найдена');
+      }
       
       // Мобильное меню
       menuToggle.addEventListener('click', function() {
@@ -1745,42 +1634,6 @@
           }
         });
       }
-      
-      // Кнопки действия
-      buttons.forEach(button => {
-        button.addEventListener('click', function() {
-          // Если кнопка не находится в навигации и не является кнопкой из тарифов
-          if (!this.closest('.mobile-menu') && 
-              !this.closest('.header__container') && 
-              !this.classList.contains('js-pricing-btn')) {
-            scrollToElement('#contact');
-          }
-        });
-      });
-      
-      // Кнопки "Подробнее" в тарифах
-      pricingButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          scrollToElement('#feedback');
-          
-          // Предварительный выбор темы в форме
-          const subjectSelect = document.getElementById('subject');
-          if (subjectSelect) {
-            // Выбираем опцию "Вопрос о ценах"
-            for (let i = 0; i < subjectSelect.options.length; i++) {
-              if (subjectSelect.options[i].value === 'pricing') {
-                subjectSelect.selectedIndex = i;
-                break;
-              }
-            }
-          }
-          
-          // Добавляем фокус на поле имени
-          setTimeout(() => {
-            document.getElementById('name').focus();
-          }, 800);
-        });
-      });
       
       // Первоначальная проверка активного раздела
       highlightCurrentSection();
