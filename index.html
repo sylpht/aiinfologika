@@ -556,7 +556,7 @@
       position: relative;
       overflow: hidden;
       padding: 0;
-      min-height: 100vh;
+      min-height: 110vh; /* Увеличено с 100vh до 110vh */
       display: flex;
       align-items: center;
       background-color: var(--color-bg-dark);
@@ -568,7 +568,7 @@
       gap: var(--spacing-8);
       position: relative;
       align-items: center;
-      padding-top: calc(var(--spacing-16) + 60px);
+      padding-top: 0;
       padding-bottom: var(--spacing-16);
       height: 100%;
     }
@@ -584,6 +584,7 @@
       padding-right: 0;
       max-width: 650px;
       margin: 0 auto;
+      margin-top: -40px;
     }
     
     .hero__title {
@@ -591,7 +592,11 @@
       font-weight: var(--font-weight-bold);
       line-height: 1.2;
       margin-bottom: var(--spacing-6);
-      max-width: 100%;
+      max-width: 650px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      text-align: left;
     }
     
     @media (min-width: 768px) {
@@ -606,6 +611,9 @@
       opacity: 0.9;
       max-width: 100%;
       line-height: 1.6;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
     }
     
     .hero__buttons {
@@ -615,6 +623,7 @@
     .hero__image {
       position: relative;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       margin-top: var(--spacing-8);
@@ -629,36 +638,132 @@
     /* AI Egg Animation */
     .ai-graphic {
       position: relative;
-      width: 200px;
-      height: 200px;
+      width: 300px;
+      height: 300px;
       margin: 0 auto;
+    }
+    
+    @media (min-width: 1024px) {
+      .ai-graphic {
+        margin-left: auto; /* Смещает яйцо немного правее на десктопных экранах */
+        margin-right: 0;
+      }
     }
     
     .ai-egg {
       position: absolute;
-      width: 150px;
-      height: 200px;
+      width: 220px;
+      height: 300px;
       background-color: white;
       border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+      box-shadow: 0 0 50px rgba(255, 255, 255, 0.7);
       animation: float 3s ease-in-out infinite;
     }
     
     @keyframes float {
       0% {
         transform: translate(-50%, -50%);
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
       }
       50% {
         transform: translate(-50%, -60%);
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        box-shadow: 0 0 60px rgba(255, 255, 255, 0.8);
       }
       100% {
         transform: translate(-50%, -50%);
-        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+      }
+    }
+    
+    /* Форма обратной связи */
+    .quick-form {
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-6);
+      margin-top: var(--spacing-8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-lg);
+      transition: transform var(--transition-normal);
+    }
+    
+    .quick-form:hover {
+      transform: translateY(-5px);
+    }
+    
+    .quick-form__title {
+      font-size: var(--text-xl);
+      color: var(--color-white);
+      margin-bottom: var(--spacing-4);
+      text-align: center;
+      font-weight: var(--font-weight-semibold);
+    }
+    
+    .form-group {
+      margin-bottom: var(--spacing-4);
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: var(--spacing-2);
+      color: var(--color-white);
+      font-size: var(--text-sm);
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: var(--spacing-3);
+      border-radius: var(--radius-md);
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--color-white);
+      transition: all var(--transition-fast);
+    }
+    
+    .quick-form {
+      background-color: var(--color-gray-100);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-6);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: var(--shadow-md);
+      transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    }
+    
+    .quick-form:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .form-control::placeholder {
+      color: rgba(0, 0, 0, 0.3);
+    }
+    
+    .form-control:focus {
+      outline: none;
+      background-color: white;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 2px rgba(56, 85, 179, 0.2);
+    }
+    
+    .form-control-textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    
+    .btn-submit:hover {
+      background: linear-gradient(to right, #2a46a8, #5b7bf0);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(56, 85, 179, 0.4);
+    }
+    
+    @media (max-width: 1023px) {
+      .quick-form {
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
       }
     }
     
@@ -716,6 +821,9 @@
     .service-description {
       color: var(--color-text-secondary);
       line-height: var(--line-height-relaxed);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
     }
     
     .service-center {
@@ -797,12 +905,24 @@
     @media (min-width: 1024px) {
       .contact {
         flex-direction: row;
-        align-items: center;
+        align-items: flex-start;
+      }
+    }
+    
+    .contact__left {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    
+    @media (max-width: 1023px) {
+      .contact__left {
+        margin-bottom: var(--spacing-10);
       }
     }
     
     .contact__image {
-      flex: 1;
+      width: 100%;
       border-radius: var(--radius-lg);
       overflow: hidden;
       box-shadow: var(--shadow-xl);
@@ -835,10 +955,6 @@
       margin-bottom: var(--spacing-8);
       font-size: var(--text-3xl);
       letter-spacing: var(--letter-spacing-tight);
-    }
-    
-    .section--alt {
-      background-color: var(--color-gray-50);
     }
     
     /* =========== Тарифы =========== */
@@ -1080,6 +1196,7 @@
     .footer__bottom {
       padding: var(--spacing-10) 0;
       opacity: 0.7;
+      text-align: center;
     }
     
     .footer__contact {
@@ -1089,6 +1206,25 @@
     
     .footer__address {
       margin-top: var(--spacing-4);
+    }
+    
+    /* Дополнительные адаптивные стили для футера */
+    @media (max-width: 767px) {
+      .footer__container {
+        text-align: center;
+      }
+      
+      .footer__info {
+        margin: 0 auto;
+      }
+      
+      .footer__nav {
+        justify-content: center;
+      }
+      
+      .footer__contact {
+        text-align: center;
+      }
     }
     
     /* Кнопка "Наверх" */
@@ -1173,6 +1309,30 @@
       }
     }
     
+    @media (max-width: 480px) {
+      .ai-graphic {
+        width: 230px;
+        height: 230px;
+      }
+      
+      .ai-egg {
+        width: 170px;
+        height: 220px;
+      }
+      
+      .hero__content {
+        margin-top: -10px;
+      }
+      
+      .quick-form {
+        padding: var(--spacing-4);
+      }
+      
+      .form-control-textarea {
+        min-height: 60px;
+      }
+    }
+    
     /* Анимации */
     @keyframes fadeIn {
       from {
@@ -1247,8 +1407,8 @@
       <!-- Правильное центрирование через padding -->
       <div class="hero__content animate-fade-in">
         <span class="section-eyebrow">Infologika GPT</span>
-        <h1 class="hero__title">Превратите свои идеи ИИ в продукты, приносящие доход</h1>
-        <p class="hero__text">Мы помогаем инноваторам и предпринимателям создавать передовые решения с использованием машинного обучения и нейросетей. От концепции до готового продукта — с нами это проще, чем вы думаете.</p>
+                  <h1 class="hero__title">Превратите свои идеи&nbsp;ИИ в&nbsp;продукты,<br>приносящие&nbsp;доход</h1>
+        <p class="hero__text">Мы&nbsp;помогаем инноваторам и&nbsp;предпринимателям создавать передовые решения с&nbsp;использованием машинного обучения и&nbsp;нейросетей. От&nbsp;концепции до&nbsp;готового продукта&nbsp;— с&nbsp;нами это проще, чем&nbsp;вы&nbsp;думаете.</p>
         <div class="hero__buttons">
           <a href="https://forms.gle/gT5pDKcZxtP6VK938" class="btn btn-light btn-lg btn-white-outline">Предложить идею</a>
         </div>
@@ -1275,7 +1435,7 @@
             <path d="M16 10c-3.3 0-6 2.7-6 6s2.7 6 6 6 6-2.7 6-6-2.7-6-6-6zm0 10c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zM26 8c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z" fill="currentColor"/>
           </svg>
           <h3 class="service-title">Приложения ChatGPT</h3>
-          <p class="service-description">У вас есть идея для реализации с помощью ChatGPT? Разработайте ее здесь!</p>
+          <p class="service-description">У&nbsp;вас есть идея для реализации с&nbsp;помощью ChatGPT? Разработайте её&nbsp;с&nbsp;нами.</p>
         </div>
         
         <div class="service-card animate-hover">
@@ -1284,8 +1444,8 @@
             <path d="M16 4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2s2-.9 2-2V6c0-1.1-.9-2-2-2z" fill="currentColor"/>
             <path d="M21.4 9.4L16 14.8l-5.4-5.4-1.4 1.4L16 17.6l6.8-6.8z" fill="currentColor"/>
           </svg>
-          <h3 class="service-title">Умные чат-боты</h3>
-          <p class="service-description">Получите интерактивного помощника для вашего бизнеса или в качестве готового продукта для продажи</p>
+          <h3 class="service-title">Чат-боты и голосовые ассистенты</h3>
+          <p class="service-description">Создайте «умных помощников» для обработки запросов 24/7, анализа обращений клиентов, автоматического создания тикетов, интеграции с&nbsp;мессенджерами и&nbsp;CRM-системами.</p>
         </div>
         
         <div class="service-card animate-hover">
@@ -1294,8 +1454,8 @@
             <path d="M9 16c0 .6.4 1 1 1h12c.6 0 1-.4 1-1s-.4-1-1-1H10c-.6 0-1 .4-1 1z" fill="currentColor"/>
             <path d="M9 20c0 .6.4 1 1 1h12c.6 0 1-.4 1-1s-.4-1-1-1H10c-.6 0-1 .4-1 1z" fill="currentColor"/>
           </svg>
-          <h3 class="service-title">Интеллектуальные веб-приложения</h3>
-          <p class="service-description">Создаем современные веб-решения с искусственным интеллектом: от простых утилит до комплексных платформ</p>
+          <h3 class="service-title">Автоматизация бизнес-процессов на основе ИИ</h3>
+          <p class="service-description">Настройте интеллектуальное распознавание документов и&nbsp;заполнение форм. Сделайте автоматическую генерацию отчётов.</p>
         </div>
         
         <div class="service-card animate-hover">
@@ -1303,8 +1463,8 @@
             <path d="M24 2H8c-1.1 0-2 .9-2 2v24c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 26H8V4h16v24z" fill="currentColor"/>
             <path d="M16 26c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM16 6c-2.2 0-4 1.8-4 4v4c0 2.2 1.8 4 4 4s4-1.8 4-4v-4c0-2.2-1.8-4-4-4zm2 8c0 1.1-.9 2-2 2s-2-.9-2-2v-4c0-1.1.9-2 2-2s2 .9 2 2v4z" fill="currentColor"/>
           </svg>
-          <h3 class="service-title">Регистрация технологичных стартапов</h3>
-          <p class="service-description">Помогаем с юридическими аспектами открытия бизнеса в сфере искусственного интеллекта</p>
+          <h3 class="service-title">Создание стартапа в сфере ИИ</h3>
+          <p class="service-description">Хотите создать коммерческий проект с&nbsp;использованием ИИ? Свяжитесь с&nbsp;нами, чтобы оценить его потенциал и&nbsp;начать разработку бизнес-плана.</p>
         </div>
         
         <div class="service-card animate-hover">
@@ -1312,8 +1472,8 @@
             <path d="M28 4H4C2.9 4 2 4.9 2 6v20c0 1.1.9 2 2 2h24c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 22H4V8h24v18z" fill="currentColor"/>
             <path d="M20 10H6v2h14v-2zM20 14H6v2h14v-2zM20 18H6v2h14v-2zM26 10h-2v2h2v-2zM26 14h-2v2h2v-2zM26 18h-2v2h2v-2z" fill="currentColor"/>
           </svg>
-          <h3 class="service-title">Умные расширения для браузеров</h3>
-          <p class="service-description">Поднимитесь на волне новых технологий. Создаем продаваемые расширения с интеллектуальными функциями.</p>
+          <h3 class="service-title">Поиск целевых клиентов с помощью ИИ</h3>
+          <p class="service-description">Проведите анализ данных для определения «идеального клиента». Настройте отправку персонализированных аутрич-сообщений. Автоматизируйте обработку&nbsp;ответов.</p>
         </div>
         
         <div class="service-card animate-hover">
@@ -1321,14 +1481,14 @@
             <path d="M25 4H7C4.8 4 3 5.8 3 8v16c0 2.2 1.8 4 4 4h18c2.2 0 4-1.8 4-4V8c0-2.2-1.8-4-4-4zm2 20c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V8c0-1.1.9-2 2-2h18c1.1 0 2 .9 2 2v16z" fill="currentColor"/>
             <path d="M9 10h3v3H9zM9 15h3v3H9zM9 20h3v3H9zM15 10h8v3h-8zM15 15h8v3h-8zM15 20h8v3h-8z" fill="currentColor"/>
           </svg>
-          <h3 class="service-title">Обработка и маркировка данных</h3>
-          <p class="service-description">Доверьте нам рутинную работу по подготовке данных для обучения ваших интеллектуальных систем.</p>
+          <h3 class="service-title">Разработка и тестирование ПО</h3>
+          <p class="service-description">Автоматизируйте генерацию кода и&nbsp;тестирование. Найдите уязвимости в&nbsp;программном обеспечении. Оптимизируйте UX на&nbsp;основе анализа поведения&nbsp;пользователей.</p>
         </div>
       </div>
       
       <div class="service-center animate-fade-in">
         <h3 class="service-title">Индивидуальные цифровые решения</h3>
-        <p class="service-description">Воплотите свои идеи в реальность с помощью современных технологий</p>
+        <p class="service-description">Воплотите свои идеи в&nbsp;реальность с&nbsp;помощью современных&nbsp;технологий</p>
       </div>
     </div>
   </section>
@@ -1344,7 +1504,7 @@
           <div class="step-number">01</div>
           <div class="step-content">
             <h3 class="step-title">Опишите вашу идею</h3>
-            <p class="step-description">Опишите вашу идею, и мы подберем оптимальное решение. Это может быть как компактное ИИ-приложение для отправки отчетов, так и сложная система для сбора структурированных данных с аналитикой.</p>
+            <p class="step-description">Опишите вашу идею, и&nbsp;мы&nbsp;подберем оптимальное решение. Это может быть как компактное ИИ-приложение для отправки отчетов, так и&nbsp;сложная система для сбора структурированных данных с&nbsp;аналитикой.</p>
           </div>
         </div>
         
@@ -1367,19 +1527,47 @@
     </div>
   </section>
 
-  <!-- Секция контактов -->
+  <!-- Секция контактов с формой обратной связи -->
   <section id="contact" class="section">
     <div class="container">
+      <span class="section-eyebrow">Обратная связь</span>
+      <h2 class="h2 text-center mx-auto" style="max-width: 800px;">Расскажите о вашем проекте</h2>
+      
       <div class="contact">
-        <div class="contact__image animate-fade-in">
-          <img src="https://framerusercontent.com/images/zCpoYkPMDJgjVfWjqns954W2Oo.jpg" alt="Contact Us" loading="lazy">
+        <div class="contact__left animate-fade-in" style="flex: 1; display: flex; flex-direction: column;">
+          <div class="contact__image">
+            <img src="https://framerusercontent.com/images/zCpoYkPMDJgjVfWjqns954W2Oo.jpg" alt="Contact Us" loading="lazy">
+          </div>
+          
+          <!-- Контент под изображением -->
+          <div style="margin-top: var(--spacing-6);">
+            <h2 class="h3" style="margin-bottom: var(--spacing-4);">Мы&nbsp;считаем, что цифровой успех&nbsp;- это непрерывный&nbsp;путь</h2>
+            <p class="text-lg" style="margin-bottom: var(--spacing-8);">Начните свой путь к&nbsp;цифровой трансформации вместе с&nbsp;нами. Наши специалисты помогут вам разработать стратегию внедрения искусственного интеллекта, которая принесет реальную пользу вашему&nbsp;бизнесу.</p>
+          </div>
         </div>
         
         <div class="contact__content animate-fade-in delay-100">
           <span class="section-eyebrow">Обратитесь к нам</span>
-          <h2 class="h3 contact__title">Мы считаем, что цифровой успех - это непрерывный путь</h2>
-          <p class="text-lg" style="margin-bottom: var(--spacing-8);">Начните свой путь к цифровой трансформации вместе с нами. Наши специалисты помогут вам разработать стратегию внедрения искусственного интеллекта, которая принесет реальную пользу вашему бизнесу.</p>
-          <a href="https://forms.gle/gT5pDKcZxtP6VK938" class="btn btn-primary btn-lg">Связаться с нами</a>
+          
+          <!-- Форма обратной связи справа -->
+          <div class="quick-form" style="background-color: var(--color-gray-100); margin-top: var(--spacing-4); border-radius: var(--radius-lg); padding: var(--spacing-6); box-shadow: var(--shadow-md);">
+            <h3 class="quick-form__title" style="color: var(--color-text-primary);">Быстрая связь</h3>
+            <form action="#" method="post">
+              <div class="form-group">
+                <label for="quick-name" class="form-label" style="color: var(--color-text-secondary);">Имя</label>
+                <input type="text" id="quick-name" class="form-control" placeholder="Ваше имя" style="background-color: white; color: var(--color-text-primary); border-color: var(--color-gray-300);">
+              </div>
+              <div class="form-group">
+                <label for="quick-email" class="form-label" style="color: var(--color-text-secondary);">Email</label>
+                <input type="email" id="quick-email" class="form-control" placeholder="Ваш email" style="background-color: white; color: var(--color-text-primary); border-color: var(--color-gray-300);">
+              </div>
+              <div class="form-group">
+                <label for="quick-message" class="form-label" style="color: var(--color-text-secondary);">Сообщение</label>
+                <textarea id="quick-message" class="form-control form-control-textarea" placeholder="Ваше сообщение" style="background-color: white; color: var(--color-text-primary); border-color: var(--color-gray-300); min-height: 80px;"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Отправить</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
