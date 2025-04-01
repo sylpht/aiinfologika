@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <meta name="description" content="Infologika GPT - разработка приложений на базе искусственного интеллекта по фиксированной цене">
   <title>Infologika GPT - Услуги искусственного интеллекта</title>
   
@@ -571,6 +571,7 @@
       padding-top: 0;
       padding-bottom: var(--spacing-16);
       height: 100%;
+      width: 100%;
     }
     
     @media (min-width: 1024px) {
@@ -584,7 +585,8 @@
       padding-right: 0;
       max-width: 650px;
       margin: 0 auto;
-      margin-top: -40px;
+      margin-top: 0; /* Изменено с -40px на 0 для лучшей адаптивности */
+      width: 100%;
     }
     
     .hero__title {
@@ -618,6 +620,14 @@
     
     .hero__buttons {
       margin-top: var(--spacing-8);
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-4);
+    }
+    
+    .hero__buttons .btn {
+      margin-bottom: var(--spacing-3);
     }
     
     .hero__image {
@@ -632,6 +642,23 @@
     @media (min-width: 1024px) {
       .hero__image {
         margin-top: 0;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .hero__content {
+        padding: 0 var(--spacing-3);
+        text-align: center; /* Центрируем содержимое на мобильных */
+      }
+      
+      .hero__title {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      
+      .hero__buttons {
+        justify-content: center;
       }
     }
     
@@ -652,6 +679,13 @@
       }
     }
     
+    @media (min-width: 1024px) and (max-width: 1280px) {
+      .ai-graphic {
+        width: 250px;
+        height: 250px;
+      }
+    }
+    
     .ai-egg {
       position: absolute;
       width: 220px;
@@ -663,6 +697,13 @@
       transform: translate(-50%, -50%);
       box-shadow: 0 0 50px rgba(255, 255, 255, 0.7);
       /* Анимация плавания удалена */
+    }
+    
+    @media (min-width: 1024px) and (max-width: 1280px) {
+      .ai-egg {
+        width: 180px;
+        height: 250px;
+      }
     }
     
     /* Форма обратной связи */
@@ -708,6 +749,7 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       color: var(--color-white);
       transition: all var(--transition-fast);
+      margin-bottom: var(--spacing-4); /* Добавлен отступ между полями формы */
     }
     
     .quick-form {
@@ -717,11 +759,16 @@
       border: 1px solid rgba(0, 0, 0, 0.05);
       box-shadow: var(--shadow-md);
       transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+      width: 100%;
     }
     
     .quick-form:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow-lg);
+    }
+    
+    .quick-form form {
+      width: 100%;
     }
     
     .form-control::placeholder {
@@ -760,17 +807,26 @@
       grid-template-columns: repeat(1, 1fr);
       gap: var(--spacing-8);
       margin-bottom: var(--spacing-16);
+      width: 100%;
     }
     
-    @media (min-width: 640px) {
+    @media (min-width: 640px) and (max-width: 1023px) {
       .services__grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-6);
       }
     }
     
     @media (min-width: 1024px) {
       .services__grid {
         grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .services__grid {
+        gap: var(--spacing-6);
+        margin-bottom: var(--spacing-10);
       }
     }
     
@@ -887,6 +943,7 @@
       display: flex;
       flex-direction: column;
       gap: var(--spacing-16);
+      width: 100%;
     }
     
     @media (min-width: 1024px) {
@@ -900,6 +957,7 @@
       display: flex;
       flex-direction: column;
       flex: 1;
+      width: 100%;
     }
     
     @media (max-width: 1023px) {
@@ -936,6 +994,21 @@
       background-color: var(--color-white);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow-md);
+      width: 100%;
+    }
+    
+    @media (max-width: 480px) {
+      .contact {
+        gap: var(--spacing-8);
+      }
+      
+      .contact__content {
+        padding: var(--spacing-4);
+      }
+      
+      .contact__left > div {
+        margin-top: var(--spacing-4) !important;
+      }
     }
     
     .contact__title {
@@ -951,15 +1024,38 @@
       gap: var(--spacing-10);
       margin: var(--spacing-16) auto 0;
       max-width: 1200px;
+      width: 100%;
     }
     
     .ruble-sign {
       font-family: Arial, sans-serif;
     }
     
-    @media (min-width: 768px) {
+    @media (min-width: 768px) and (max-width: 1023px) {
       .pricing-grid {
         grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-4);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .pricing-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-10);
+      }
+    }
+    
+    @media (min-width: 640px) and (max-width: 767px) {
+      .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-6);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .pricing-grid {
+        margin-top: var(--spacing-10);
+        gap: var(--spacing-8);
       }
     }
     
@@ -1068,11 +1164,20 @@
       grid-template-columns: repeat(1, 1fr);
       gap: var(--spacing-6);
       margin-top: var(--spacing-12);
+      width: 100%;
     }
     
     @media (min-width: 768px) {
       .projects-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-8);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .projects-grid {
+        gap: var(--spacing-6);
+        margin-top: var(--spacing-8);
       }
     }
     
@@ -1250,7 +1355,43 @@
     }
     
     /* =========== Адаптивные стили =========== */
+    /* Дополнительные адаптивные стили для всех устройств */
+    /* Общие правила для всех размеров экрана */
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+    
+    /* Большие экраны */
+    @media (min-width: 1200px) {
+      .container {
+        padding-left: var(--spacing-8);
+        padding-right: var(--spacing-8);
+      }
+      
+      .hero__content {
+        padding-right: var(--spacing-10);
+      }
+    }
+    
+    /* Средние экраны (десктопы и ноутбуки) */
+    @media (max-width: 1199px) {
+      :root {
+        --text-6xl: 62px;
+        --text-5xl: 48px;
+        --text-4xl: 42px;
+      }
+      
+      .hero__title {
+        font-size: var(--text-4xl);
+      }
+    }
+    
+    /* Планшеты и маленькие ноутбуки */
     @media (max-width: 1023px) {
+      :root {
+        --spacing-32: 100px;
+      }
+      
       .h1 {
         font-size: var(--text-4xl);
       }
@@ -1266,13 +1407,30 @@
       .h4 {
         font-size: var(--text-xl);
       }
+      
+      .container {
+        padding-left: var(--spacing-5);
+        padding-right: var(--spacing-5);
+      }
+      
+      .pricing-grid {
+        gap: var(--spacing-8);
+      }
     }
     
+    /* Планшеты и большие мобильные */
     @media (max-width: 767px) {
       :root {
         --spacing-16: 48px;
         --spacing-20: 64px;
         --spacing-24: 80px;
+        --text-4xl: 36px;
+        --text-3xl: 32px;
+      }
+      
+      .section {
+        padding-top: var(--spacing-16);
+        padding-bottom: var(--spacing-16);
       }
       
       .h1 {
@@ -1294,21 +1452,42 @@
       .pricing-grid {
         gap: var(--spacing-6);
       }
-    }
-    
-    @media (max-width: 480px) {
-      .ai-graphic {
-        width: 230px;
-        height: 230px;
+      
+      .process-step {
+        padding: var(--spacing-6) 0;
       }
       
-      .ai-egg {
-        width: 170px;
-        height: 220px;
+      .step-title {
+        font-size: var(--text-xl);
+      }
+    }
+    
+    /* Мобильные устройства */
+    @media (max-width: 480px) {
+      :root {
+        --text-base: 16px;
+        --text-lg: 18px;
+        --text-xl: 20px;
+        --text-2xl: 24px;
+        --text-3xl: 28px;
+      }
+      
+      .container {
+        padding-left: var(--spacing-4);
+        padding-right: var(--spacing-4);
+      }
+      
+      .hero {
+        min-height: 80vh;
+      }
+      
+      .section {
+        padding-top: var(--spacing-12);
+        padding-bottom: var(--spacing-12);
       }
       
       .hero__content {
-        margin-top: -10px;
+        margin-top: 0;
       }
       
       .quick-form {
@@ -1317,6 +1496,68 @@
       
       .form-control-textarea {
         min-height: 60px;
+      }
+      
+      .service-card {
+        padding: var(--spacing-4);
+      }
+      
+      .step-number {
+        width: 40px;
+      }
+      
+      .pricing-card {
+        padding: var(--spacing-6);
+      }
+      
+      .pricing-name {
+        font-size: var(--text-xl);
+      }
+      
+      .pricing-price {
+        font-size: var(--text-2xl);
+      }
+      
+      .btn-lg {
+        padding: var(--spacing-4) var(--spacing-8);
+        font-size: var(--text-base);
+      }
+    }
+    
+    /* Очень маленькие экраны */
+    @media (max-width: 360px) {
+      :root {
+        --text-base: 15px;
+        --text-lg: 17px;
+        --text-xl: 19px;
+        --text-2xl: 22px;
+      }
+      
+      .container {
+        padding-left: var(--spacing-3);
+        padding-right: var(--spacing-3);
+      }
+      
+      .hero {
+        min-height: 70vh;
+      }
+      
+      .section {
+        padding-top: var(--spacing-10);
+        padding-bottom: var(--spacing-10);
+      }
+      
+      .hero__title {
+        font-size: var(--text-2xl);
+      }
+      
+      .quick-form {
+        padding: var(--spacing-3);
+      }
+      
+      .btn {
+        padding: var(--spacing-3) var(--spacing-6);
+        font-size: var(--text-sm);
       }
     }
     
