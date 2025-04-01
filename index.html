@@ -556,7 +556,7 @@
       position: relative;
       overflow: hidden;
       padding: 0;
-      min-height: 110vh; /* Увеличено с 100vh до 110vh */
+      min-height: 90vh; /* Уменьшено с 110vh до 90vh */
       display: flex;
       align-items: center;
       background-color: var(--color-bg-dark);
@@ -635,17 +635,19 @@
       }
     }
     
-    /* AI Egg Animation */
+    /* AI Egg Styles - анимация удалена */
     .ai-graphic {
       position: relative;
       width: 300px;
       height: 300px;
       margin: 0 auto;
+      display: none; /* Скрыть по умолчанию (для мобильных) */
     }
     
     @media (min-width: 1024px) {
       .ai-graphic {
-        margin-left: auto; /* Смещает яйцо немного правее на десктопных экранах */
+        display: block; /* Показать только на десктопах */
+        margin-left: auto;
         margin-right: 0;
       }
     }
@@ -660,22 +662,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       box-shadow: 0 0 50px rgba(255, 255, 255, 0.7);
-      animation: float 3s ease-in-out infinite;
-    }
-    
-    @keyframes float {
-      0% {
-        transform: translate(-50%, -50%);
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-      }
-      50% {
-        transform: translate(-50%, -60%);
-        box-shadow: 0 0 60px rgba(255, 255, 255, 0.8);
-      }
-      100% {
-        transform: translate(-50%, -50%);
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
-      }
+      /* Анимация плавания удалена */
     }
     
     /* Форма обратной связи */
@@ -1397,7 +1384,7 @@
     </nav>
     
     <div class="mobile-menu__button">
-      <a href="https://forms.gle/gT5pDKcZxtP6VK938" class="btn btn-primary btn-lg btn-white-outline">Предложить идею</a>
+      <a href="https://forms.gle/gT5pDKcZxtP6VK938" class="btn btn-primary btn-lg btn-white-outline">Пришлите вашу идею</a>
     </div>
   </div>
 
@@ -1410,7 +1397,7 @@
                   <h1 class="hero__title">Превратите свои идеи&nbsp;ИИ в&nbsp;продукты,<br>приносящие&nbsp;деньги</h1>
         <p class="hero__text">Мы&nbsp;помогаем инноваторам и&nbsp;предпринимателям создавать передовые решения с&nbsp;использованием машинного обучения и&nbsp;нейросетей. От&nbsp;концепции до&nbsp;готового продукта&nbsp;— с&nbsp;нами это проще, чем&nbsp;вы&nbsp;думаете.</p>
         <div class="hero__buttons">
-          <a href="https://forms.gle/gT5pDKcZxtP6VK938" class="btn btn-light btn-lg btn-white-outline">Предложить идею</a>
+          <a href="https://forms.gle/gT5pDKcZxtP6VK938" class="btn btn-light btn-lg btn-white-outline">Пришлите вашу идею</a>
         </div>
       </div>
       
